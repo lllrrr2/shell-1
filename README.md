@@ -12,4 +12,6 @@ wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/do
 ```
 
 # x-ui一键脚本
-```wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/docker-x-ui.sh;chmod +x *sh;bash docker-x-ui.sh```
+```javascript
+wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/docker-x-ui.sh;chmod +x *sh;bash docker-x-ui.sh
+```
