@@ -5,6 +5,8 @@ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/d
 yum makecache fast >/dev/null 2>&1
 }
 function N02() {
+systemctl stop firewalld.service >/dev/null 2>&1
+systemctl disable firewalld.service >/dev/null 2>&1
 #yum -y install docker-ce >/dev/null 2>&1
 curl -fsSL https://get.docker.com | bash -s docker  --mirror Aliyun
 }
