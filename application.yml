@@ -1,0 +1,33 @@
+server: 
+  port: 1170
+
+#按照注释部分填写配置，注意填写部分保留空格
+spring: 
+  redis: 
+    #redis密码，请填写
+    password: 
+    #redis地址，默认127.0.0.1，请填写（如果redis使用docker安装方式，可以关联启动填docker别名，如redis）
+    host: 
+    #redis端口地址，默认6379
+    port: 6379
+  thymeleaf:
+    content-type: text/html
+    cache: false
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+
+#青龙变量，请根据自己青龙地址填写
+ql: 
+  #青龙地址
+  host: 
+  #青龙端口
+  port: 
+  #青龙client_id
+  client_id: 
+  #青龙client_secret
+  client_secret: 
