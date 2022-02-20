@@ -4,9 +4,9 @@ server:
 #按照注释部分填写配置，注意填写部分保留空格
 spring: 
   redis: 
-    #redis密码，请填写
+    #redis（密码默认为空），请填写
     password: 
-    #redis地址，默认127.0.0.1，请填写（如果redis使用docker安装方式，可以关联启动填docker别名，如redis）
+    #redis地址，默认127.0.0.1，请填写（需要注意本地redis和本地容器redis的host区别，本地默认127.0.0.1，docker默认redis）
     host: 
     #redis端口地址，默认6379
     port: 6379
@@ -23,7 +23,7 @@ spring:
 
 #青龙变量，请根据自己青龙地址填写
 ql: 
-  #青龙地址
+  #青龙地址(直接填写ip或者域名，不带http和/)
   host: 
   #青龙端口
   port: 
