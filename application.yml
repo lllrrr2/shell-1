@@ -1,15 +1,7 @@
-server: 
+server:
   port: 1170
 
-#按照注释部分填写配置，注意填写部分格式，冒号后面保留有一个空格
-spring: 
-  redis: 
-    #redis（密码默认为空），请填写
-    password: 
-    #redis地址，默认127.0.0.1，请填写（需要注意本地redis和本地容器redis的host区别，本地默认127.0.0.1，docker默认redis）
-    host: 
-    #redis端口地址，默认6379
-    port: 6379
+spring:
   thymeleaf:
     content-type: text/html
     cache: false
@@ -20,14 +12,58 @@ spring:
     check-template-location: true
     prefix: classpath:/templates/
     suffix: .html
+    #按照注释部分填写配置以下有注释部分需要填写，注意填写部分保留空格
+  redis:
+    host: redis #redis地址，默认127.0.0.1，请填写（需要注意本地redis和本地容器redis的host区别，本地默认127.0.0.1，docker默认redis）
+    password: #redis（密码默认为空），请填写
+    port: 6379 #redis端口地址，默认6379
 
-#青龙变量，请根据自己青龙地址填写
-ql: 
-  #青龙地址(直接填写ip或者域名，不带http和/)
-  host: 
-  #青龙端口
-  port: 
-  #青龙client_id
-  client_id: 
-  #青龙client_secret
-  client_secret: 
+#青龙变量，请根据自己青龙地址填写（不填写，则当前项目只用于提取CK，不对接青龙）
+ql:
+  #网站标题
+  title: 京东短信车
+  notice: 为提高账户的安全性，请关闭京东免密支付。下载以下APP并登陆你的账号： 京东、京喜、京东金融、京东极速版。 #公告
+  #多容器请按照注释部分（要对齐符号-才是正确的格式）
+  containers:
+    #青龙域名或者ip(直接填写ip或者域名，不带http和/)
+    - host: 101.11.xx.101
+      #青龙端口
+      port: 5700
+      #青龙client_id
+      client_id: adfggdsdsfsdff
+      #青龙client_secret
+      client_secret: asdfhfgdfghj
+      #服务器名称，默认按顺序加载，如服务器1，服务器2
+      ql_name: 青龙节点1
+      #提交青龙CK上限数量(默认最多40个)
+      ck_count: 40
+      #提交青龙Wskey上限数量(默认最多40个)
+      wskey_count: 40
+#    #青龙域名或者ip(直接填写ip或者域名，不带http和/)
+#    - host:
+#      #青龙端口
+#      port:
+#      #青龙client_id
+#      client_id:
+#      #青龙client_secret
+#      client_secret:
+#      #服务器名称，默认按顺序加载，如服务器1，服务器2
+#      ql_name:
+#      #提交青龙CK上限数量(默认最多40个)
+#      ck_count: 40
+#      #提交青龙Wskey上限数量(默认最多40个)
+#      wskey_count: 40
+#    #青龙域名或者ip(直接填写ip或者域名，不带http和/)
+#    - host:
+#      #青龙端口
+#      port:
+#      #青龙client_id
+#      client_id:
+#      #青龙client_secret
+#      client_secret:
+#      #服务器名称，默认按顺序加载，如服务器1，服务器2
+#      ql_name:
+#      #提交青龙CK上限数量(默认最多40个)
+#      ck_count: 40
+#      #提交青龙Wskey上限数量(默认最多40个)
+#      wskey_count: 40
