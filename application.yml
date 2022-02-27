@@ -12,58 +12,82 @@ spring:
     check-template-location: true
     prefix: classpath:/templates/
     suffix: .html
-    #按照注释部分填写配置以下有注释部分需要填写，注意填写部分保留空格
+
+# ===================下方部分需要填写，按照注释部分填写配置，以下有注释部分需要填写，注意填写部分保留空格===================
   redis:
     host: redis #redis地址，默认127.0.0.1，请填写（需要注意本地redis和本地容器redis的host区别，本地默认127.0.0.1，docker默认redis）
     password: #redis（密码默认为空），请填写
     port: 6379 #redis端口地址，默认6379
 
-#青龙变量，请根据自己青龙地址填写（不填写，则当前项目只用于提取CK，不对接青龙）
+# ======================================= WxPusher 通知设置区域 ===========================================
+# 此处填你申请的 appToken. 官方文档：https://wxpusher.zjiecode.com/docs
+# 创建推送应用时，需要在事件中填写回调地址，不填写则无法获取推送信息，地址：http://ip:端口/api/wxpusher，如：http://101.32.xxx.xxx:1170/api/wxpusher
+# 这里的通知只用于用户登陆 删除 是给你的通知（暂未实现，后续添加）
+push:
+  # appToken 可在管理台查看: https://wxpusher.zjiecode.com/admin/main/app/appToken
+  appToken: 
+  # main_uid 填你自己uid
+  main_uid: 
+
+# ================= 推送信息定时表达式 =================
+# 登陆预警 0 0 12 * * ?  每天中午十二点 https://www.bejson.com/othertools/cron/ 表达式在线生成网址
+ExpirationCron: 0 0 12 * * ?
+# 个人资产 0 0 10,20 * * ?  早十点晚上八点
+BeanCron: 0 0 10,20 * * ?
+
+# ================= 青龙变量，请根据自己青龙地址填写，不填写，则当前项目只用于提取CK，不对接青龙 =================
 ql:
-  #网站标题
+  # 网站标题
   title: 京东短信车
-  notice: 为提高账户的安全性，请关闭京东免密支付。下载以下APP并登陆你的账号： 京东、京喜、京东金融、京东极速版。 #公告
-  #多容器请按照注释部分（要对齐符号-才是正确的格式）
+  # 公告
+  notice: 为提高账户的安全性，请关闭京东免密支付。下载以下APP并登陆你的账号： 京东、京喜、京东金融、京东极速版。
+  # 多容器请按照注释部分（要对齐符号-才是正确的格式）
   containers:
-    #青龙域名或者ip(直接填写ip或者域名，不带http和/)
-    - host: 101.11.xx.101
-      #青龙端口
-      port: 5700
-      #青龙client_id
-      client_id: adfggdsdsfsdff
-      #青龙client_secret
-      client_secret: asdfhfgdfghj
-      #服务器名称，默认按顺序加载，如服务器1，服务器2
+    # 青龙域名或者ip(直接填写ip或者域名，不带http和/)
+    - host:
+      # 青龙端口
+      port:
+      # 青龙client_id
+      client_id:
+      # 青龙client_secret
+      client_secret:
+      # 服务器名称，默认按顺序加载，如服务器1，服务器2
       ql_name: 青龙节点1
       #提交青龙CK上限数量(默认最多40个)
       ck_count: 40
-      #提交青龙Wskey上限数量(默认最多40个)
+      # 提交青龙Wskey上限数量(默认最多40个)
       wskey_count: 40
-#    #青龙域名或者ip(直接填写ip或者域名，不带http和/)
+      # 建议一个青龙一个WxPusher 应用
+      appToken:
+#    # 青龙域名或者ip(直接填写ip或者域名，不带http和/)
 #    - host:
-#      #青龙端口
+#      # 青龙端口
 #      port:
-#      #青龙client_id
+#      # 青龙client_id
 #      client_id:
-#      #青龙client_secret
+#      # 青龙client_secret
 #      client_secret:
-#      #服务器名称，默认按顺序加载，如服务器1，服务器2
+#      # 服务器名称，默认按顺序加载，如服务器1，服务器2
 #      ql_name:
-#      #提交青龙CK上限数量(默认最多40个)
+#      # 提交青龙CK上限数量(默认最多40个)
 #      ck_count: 40
-#      #提交青龙Wskey上限数量(默认最多40个)
+#      # 提交青龙Wskey上限数量(默认最多40个)
 #      wskey_count: 40
-#    #青龙域名或者ip(直接填写ip或者域名，不带http和/)
+#      # 建议一个青龙一个WxPusher 应用
+#      appToken:
+#    # 青龙域名或者ip(直接填写ip或者域名，不带http和/)
 #    - host:
-#      #青龙端口
+#      # 青龙端口
 #      port:
-#      #青龙client_id
+#      # 青龙client_id
 #      client_id:
-#      #青龙client_secret
+#      # 青龙client_secret
 #      client_secret:
-#      #服务器名称，默认按顺序加载，如服务器1，服务器2
+#      # 服务器名称，默认按顺序加载，如服务器1，服务器2
 #      ql_name:
-#      #提交青龙CK上限数量(默认最多40个)
+#      # 提交青龙CK上限数量(默认最多40个)
 #      ck_count: 40
-#      #提交青龙Wskey上限数量(默认最多40个)
+#      # 提交青龙Wskey上限数量(默认最多40个)
 #      wskey_count: 40
+#      # 建议一个青龙一个WxPusher 应用
+#      appToken:
