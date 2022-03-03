@@ -19,5 +19,5 @@ wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/do
 
 # 京东短信车配置文件下载地址
 ```javascript
-wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml
+wget -O application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml
 ```
