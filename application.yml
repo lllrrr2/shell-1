@@ -23,7 +23,7 @@ spring:
 
 # ======================================= WxPusher 通知设置区域 ===========================================
 # 此处填你申请的 appToken. 官方文档：https://wxpusher.zjiecode.com/docs
-# 创建推送应用时，需要在事件中填写回调地址，不填写则无法获取推送信息，地址：http://ip:端口/api/wxpusher，如：http://101.32.xxx.xxx:1170/api/wxpusher
+# 创建推送应用时，需要在事件中填写回调地址，不填写则无法获取推送信息，同时ip需要填写公网地址，回调地址：http://ip:端口/api/wxpusher，如：http://101.32.xxx.xxx:1170/api/wxpusher
 # 这里的通知只用于用户登陆 删除 是给你的通知
 push:
   # appToken 可在管理台查看: https://wxpusher.zjiecode.com/admin/main/app/appToken
