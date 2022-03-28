@@ -4,24 +4,8 @@ else if [ $(command -v wget | grep -c "wget") -lt 1 -o $(command -v nginx | grep
 then yum update || apt update
 yes | yum upgrade || yes | apt upgrade
 yum update || apt update
-yum install wget -y || apt install wget -y
-yum install gcc  -y || apt install gcc -y
-yum install -y pcre pcre-devel || apt install pcre pcre-devel -y
-yum install -y zlib zlib-devel || apt install  zlib zlib-devel -y
-yum install -y openssl openssl-devel || apt install openssl openssl-devel -y
-
-wget http://nginx.org/download/nginx-1.9.9.tar.gz  #下载nginx安装包 下载在/root目录下
-tar -zxvf  nginx-1.9.9.tar.gz  #解压nginx安装包 解压在/root目录下
-cd nginx-1.9.9/ #进入解压好的文件目录下
-
-#以下命令需依次执行
-./configure #配置安装路径
-make #编译
-make install #安装
-
-cd / #返回根目录
-cd /usr/local/nginx #切换到nginx安装目录
-
+rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+yum install wget nginx -y || apt install wget nginx -y
 fi
 spip=$(curl -s ifconfig.me)
 spport="443"
