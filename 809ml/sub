@@ -4,8 +4,10 @@ else if [ $(command -v wget | grep -c "wget") -lt 1 -o $(command -v nginx | grep
 then yum update || apt update
 yes | yum upgrade || yes | apt upgrade
 yum update || apt update
-rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
-yum install wget nginx -y || apt install wget nginx -y
+sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+sudo yum install wget nginx -y || apt install wget nginx -y
+sudo systemctl start nginx.service
+sudo systemctl enable nginx.service
 fi
 spip=$(curl -s ifconfig.me)
 spport="443"
