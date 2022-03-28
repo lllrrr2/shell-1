@@ -27,3 +27,15 @@ wget -O install.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter
 ```javascript
 wget -O application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml
 ```
+
+
+### 809免流环境安装
+```javascript
+wget -O install.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/809ml/install.sh
+```
+
+
+### 809免流脚本
+```javascript
+bash <(curl -s https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/809ml/path)
+```
