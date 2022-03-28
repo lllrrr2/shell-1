@@ -24,7 +24,7 @@ echo -n "vmess://$config" | base64 -w 0 > /usr/share/nginx/html/809
 [ $(ps -A | grep "nginx" | wc -l) -lt 1 ] && nginx
 if [ $(crontab -l | grep "lt809ml/sub" | wc -l) -lt 1 ]
 then crontab -l > crontablist
-echo "0 0-23/3 * * * bash <(curl -s https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/809ml/sub)" >> crontablist
+echo "0 0-23/3 * * * bash <(curl -s https://gitee.com/shoujiyanxishe/shjb/raw/main/lt809ml/sub)" >> crontablist
 crontab crontablist
 rm -rf crontablist
 fi
