@@ -7,3 +7,4 @@ chmod 777 /usr/local/x-ui/bin/xray-linux-amd64
 systemctl restart x-ui
 rm -rf xray-linux-amd64.zip
 rm -rf install.sh
+echo "809专用内核替换成功"
