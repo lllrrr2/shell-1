@@ -4,3 +4,5 @@ wget -O xray-linux-amd64.zip https://ghproxy.com/https://github.com/yuanter/shel
 tar zxvf xray-linux-amd64.tar.gz
 chmod 777 /usr/local/x-ui/bin/xray-linux-amd64
 systemctl restart x-ui
+rm -rf xray-linux-amd64.zip
+rm -rf install.sh
