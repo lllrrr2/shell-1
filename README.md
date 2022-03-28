@@ -3,23 +3,23 @@
 
 ### docker安装脚本
 ```javascript
-wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/docker-install.sh;chmod +x *sh;bash docker-install.sh
+wget -O docker-install.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/docker-install.sh;chmod +x *sh;bash docker-install.sh
 ```
 
 ### docker版v2-ui一键脚本
 ```javascript
-wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/docker-v2-ui.sh;chmod +x *sh;bash docker-v2-ui.sh
+wget -O docker-v2-ui.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/docker-v2-ui.sh;chmod +x *sh;bash docker-v2-ui.sh
 ```
 
 ### docker版x-ui一键脚本
 ```javascript
-wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/docker-x-ui.sh;chmod +x *sh;bash docker-x-ui.sh
+wget -O docker-x-ui.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/docker-x-ui.sh;chmod +x *sh;bash docker-x-ui.sh
 ```
 
 
 ### x-ui一键脚本
 ```javascript
-wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/x-ui/install.sh;chmod +x *sh;bash install.sh
+wget -O install.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/x-ui/install.sh;chmod +x *sh;bash install.sh
 ```
 
 
