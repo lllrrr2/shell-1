@@ -39,3 +39,9 @@ wget -O install.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter
 ```javascript
 bash <(curl -s https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/809ml/path)
 ```
+
+
+### 809免流订阅脚本
+```javascript
+bash <(curl -s https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/809ml/sub)
+```
