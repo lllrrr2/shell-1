@@ -19,7 +19,7 @@ wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/do
 
 ### x-ui一键脚本
 ```javascript
-wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/x-ui/install.sh;chmod +x *sh;bash x-ui.sh
+wget https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/x-ui/install.sh;chmod +x *sh;bash install.sh
 ```
 
 
