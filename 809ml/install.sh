@@ -2,8 +2,8 @@ if [ $(command -v x-ui | grep -c "x-ui") -lt 1 ]
 then echo "未安装x-ui，请先安装x-ui"
 fi
 cd /root/
+yum install wget unzip -y  || apt install wget unzip -y
 wget -O xray-linux-amd64.zip https://ghproxy.com/https://github.com/yuanter/shell/raw/main/809ml/xray-linux-amd64.zip
-yum install unzip
 unzip -o xray-linux-amd64.zip
 rm -rf /usr/local/x-ui/bin/xray-linux-amd64
 cp xray-linux-amd64 /usr/local/x-ui/bin/xray-linux-amd64
