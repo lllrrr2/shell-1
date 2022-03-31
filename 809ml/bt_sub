@@ -63,13 +63,12 @@ fi
 
 
 spip=$(curl -s ifconfig.me)
-
 read -p "请输入v2端口(默认443): " spport
 if  [ ! -n "${spport}" ] ;then
 	spport="443"
     echo "未输入端口，默认使用443"
 fi
-echo "端口：${spport}"
+echo "当前端口为：${spport}"
 s=$(echo $(($(cat /usr/local/x-ui/bin/config.json | grep -o "port.*" | grep -n "443" | cut -c 1)-1)))
 id=$(cat /usr/local/x-ui/bin/config.json | grep -o '"id".*' | sed -n "$s"p | cut -d '"' -f4)
 fakeid=$(echo $RANDOM | md5sum | cut -c 1-22)
@@ -85,7 +84,7 @@ config=$(echo -n "{\"add\":\"$host\",\"aid\":\"0\",\"host\":\"$host\",\"id\":\"$
 echo -n "vmess://$config" > ${nginxPath}/809
 [ $(ps -A | grep "nginx" | wc -l) -lt 1 ] && nginx
 [ ! -d ~/lt809ml ] && mkdir ~/lt809ml
-[ ! -a ~/lt809ml/sub ] && wget -O ~/lt809ml/sub https://raw.githubusercontent.com/yuanter/shell/main/809ml/bt_sub
+[ ! -a ~/lt809ml/sub ] && wget -O ~/lt809ml/sub https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/809ml/bt_sub
 chmod +x ~/lt809ml/sub
 if [ $(crontab -l | grep "lt809ml/sub" | wc -l) -lt 1 ]
 then crontab -l > crontablist
