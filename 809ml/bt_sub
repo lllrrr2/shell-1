@@ -43,7 +43,7 @@ elif [[ x"${release}" == x"debian" ]]; then
 fi
 
 #判断宝塔路径
-if [ ! -d "/www/server/nginx/html/" ];then
+if [ -d "/www/server/nginx/html/" ];then
   nginxPath="/www/server/nginx/html"
 fi
 echo "当前路径为：${nginxPath}"
