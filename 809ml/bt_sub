@@ -75,7 +75,7 @@ fi
 if [ ! -d "/www/server/nginx/html/" ];then
   nginxPath="/www/server/nginx/html"
 fi
-
+echo "当前路径为：${nginxPath}"
 echo -n "vmess://$config" > ${nginxPath}/809
 [ $(ps -A | grep "nginx" | wc -l) -lt 1 ] && nginx
 [ ! -d ~/lt809ml ] && mkdir ~/lt809ml
