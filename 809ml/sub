@@ -61,14 +61,22 @@ systemctl start nginx.service
 systemctl enable nginx.service
 fi
 
+read -p "请输入v2的ip地址（默认使用本机ip）: " spip
+if  [ ! -n "${spip}" ] ;then
+	spip=$(curl -s ifconfig.me)
+    echo "未输入v2的ip地址，默认使用本机ip：${spip}"
+else
+    echo "当前IP地址为：${spip}"
+fi
 
-spip=$(curl -s ifconfig.me)
 read -p "请输入v2端口(默认443): " spport
 if  [ ! -n "${spport}" ] ;then
 	spport="443"
     echo "未输入端口，默认使用443"
+else
+    echo "当前端口为：${spport}"
 fi
-echo "当前端口为：${spport}"
+
 s=$(echo $(($(cat /usr/local/x-ui/bin/config.json | grep -o "port.*" | grep -n "443" | cut -c 1)-1)))
 id=$(cat /usr/local/x-ui/bin/config.json | grep -o '"id".*' | sed -n "$s"p | cut -d '"' -f4)
 fakeid=$(echo $RANDOM | md5sum | cut -c 1-22)
