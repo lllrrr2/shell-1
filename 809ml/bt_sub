@@ -30,6 +30,24 @@ else
 fi
 
 
+#centos nginx常见根目录  /usr/share/nginx/html
+#ubuntu或者Debian nginx常见根目录  /var/www/html
+#宝塔 nginx常见根目录  /www/server/nginx/html
+nginxPath=""
+if [[ x"${release}" == x"centos" ]]; then
+   nginxPath="/usr/share/nginx/html"
+elif [[ x"${release}" == x"ubuntu" ]]; then
+   nginxPath="/var/www/html"
+elif [[ x"${release}" == x"debian" ]]; then
+   nginxPath="/var/www/html"
+fi
+
+#判断宝塔路径
+if [ ! -d "/www/server/nginx/html/" ];then
+  nginxPath="/www/server/nginx/html"
+fi
+echo "当前路径为：${nginxPath}"
+
 if [ $(command -v x-ui | grep -c "x-ui") -lt 1 ]
 then echo "${red}错误：${plain} 未安装x-ui，请先安装x-ui，并替换好809专用xray内核，再新建ws443节点，接着重新运行此脚本"
 else if [ $(command -v wget | grep -c "wget") -lt 1 -o $(command -v nginx | grep -c "nginx") -lt 1 ]
@@ -59,23 +77,6 @@ path=$(echo $url | grep -o "/if5ax.*")
 enpath=$(echo $path | sed 's/=/\\u003d/g' | sed 's/&/\\u0026/g')
 config=$(echo -n "{\"add\":\"$host\",\"aid\":\"0\",\"host\":\"$host\",\"id\":\"$id\",\"net\":\"ws\",\"path\":\"$enpath\",\"port\":\"809\",\"ps\":\"联通809免流\",\"scy\":\"auto\",\"sni\":\"\",\"tls\":\"\",\"type\":\"\",\"v\":\"2\"}" | base64 -w 0)
 
-#centos nginx常见根目录  /usr/share/nginx/html
-#ubuntu或者Debian nginx常见根目录  /var/www/html
-#宝塔 nginx常见根目录  /www/server/nginx/html
-nginxPath=""
-if [[ x"${release}" == x"centos" ]]; then
-   nginxPath="/usr/share/nginx/html"
-elif [[ x"${release}" == x"ubuntu" ]]; then
-   nginxPath="/var/www/html"
-elif [[ x"${release}" == x"debian" ]]; then
-   nginxPath="/var/www/html"
-fi
-
-#判断宝塔路径
-if [ ! -d "/www/server/nginx/html/" ];then
-  nginxPath="/www/server/nginx/html"
-fi
-echo "当前路径为：${nginxPath}"
 echo -n "vmess://$config" > ${nginxPath}/809
 [ $(ps -A | grep "nginx" | wc -l) -lt 1 ] && nginx
 [ ! -d ~/lt809ml ] && mkdir ~/lt809ml
