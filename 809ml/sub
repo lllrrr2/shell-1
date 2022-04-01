@@ -39,7 +39,7 @@ fi
 if [ -d "/www/server/nginx/html/" ];then
   nginxPath="/www/server/nginx/html"
 fi
-echo "当前Nginx路径为：${nginxPath}"
+
 
 if [ $(command -v x-ui | grep -c "x-ui") -lt 1 ]
 then echo "${red}错误：${plain} 未安装x-ui，请先安装x-ui，并替换好809专用xray内核，再新建ws443节点，接着重新运行此脚本"
@@ -54,12 +54,14 @@ systemctl start nginx.service
 systemctl enable nginx.service
 fi
 
+echo -e "${yellow}当前已安装的Nginx路径为：${nginxPath}${plain}"
+
 read -p "请输入v2的ip地址（默认使用本机ip）: " spip
 if  [ ! -n "${spip}" ] ;then
 	spip=$(curl -s ifconfig.me)
-    echo "未输入v2的ip地址，默认使用本机ip：${spip}"
+    echo -e "${yellow}未输入v2的ip地址，默认使用本机ip：${spip}${plain}"
 else
-    echo "当前IP地址为：${spip}"
+    echo -e "${yellow}当前IP地址为：${spip}${plain}"
 fi
 
 read -p "请输入v2端口(默认443): " spport
@@ -67,7 +69,7 @@ if  [ ! -n "${spport}" ] ;then
 	spport="443"
     echo "未输入端口，默认使用443"
 else
-    echo "当前端口为：${spport}"
+    echo -e "${yellow}当前端口为：${spport}${plain}"
 fi
 
 s=$(echo $(($(cat /usr/local/x-ui/bin/config.json | grep -o "port.*" | grep -n "443" | cut -c 1)-1)))
@@ -84,7 +86,7 @@ config=$(echo -n "{\"add\":\"$host\",\"aid\":\"0\",\"host\":\"$host\",\"id\":\"$
 echo -n "vmess://$config"  | base64 -w 0 > ${nginxPath}/809
 [ $(ps -A | grep "nginx" | wc -l) -lt 1 ] && nginx
 [ ! -d ~/lt809ml ] && mkdir ~/lt809ml
-[ ! -a ~/lt809ml/sub ] && wget -O ~/lt809ml/sub https://raw.githubusercontent.com/yuanter/shell/main/809ml/sub
+[ ! -a ~/lt809ml/sub ] && wget -O ~/lt809ml/sub https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/809ml/sub
 chmod +x ~/lt809ml/sub
 if [ $(crontab -l | grep "lt809ml/sub" | wc -l) -lt 1 ]
 then crontab -l > crontablist
@@ -93,4 +95,4 @@ crontab crontablist
 rm -rf crontablist
 fi
 fi
-echo -e "脚本安装成功，请复制链接：${yellow} http://${spip}/809 ${plain}到软件订阅地址，更新订阅既可"
+echo -e "脚本安装成功，请复制链接：${yellow}http://${spip}/809${plain}到软件订阅地址，更新订阅即可"
