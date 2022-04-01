@@ -93,4 +93,4 @@ crontab crontablist
 rm -rf crontablist
 fi
 fi
-echo "脚本安装成功，请复制链接：${yellow}http://${spip}/809 ${plain}"
+echo "${yellow}脚本安装成功，请复制链接：http://${spip}/809到软件订阅地址，更新订阅既可"
