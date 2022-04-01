@@ -54,7 +54,7 @@ systemctl start nginx.service
 systemctl enable nginx.service
 fi
 
-echo -e "${yellow}当前已安装的Nginx路径为：${nginxPath}${plain}"
+#echo -e "${yellow}当前已安装的Nginx路径为：${nginxPath}${plain}"
 
 read -p "请输入v2的ip地址（默认使用本机ip）: " spip
 if  [ ! -n "${spip}" ] ;then
@@ -67,7 +67,7 @@ fi
 read -p "请输入v2端口(默认443): " spport
 if  [ ! -n "${spport}" ] ;then
 	spport="443"
-    echo "未输入端口，默认使用443"
+    echo -e "${yellow}未输入端口，默认使用端口：443${plain}"
 else
     echo -e "${yellow}当前端口为：${spport}${plain}"
 fi
