@@ -95,4 +95,4 @@ crontab crontablist
 rm -rf crontablist
 fi
 fi
-echo -e "脚本安装成功，请复制链接：${yellow}http://${spip}/809${plain}输入进软件的订阅地址更新即可"
+echo -e "脚本安装成功，请复制链接：${yellow}http://${spip}/809${plain} 输入进软件的订阅地址更新即可"
