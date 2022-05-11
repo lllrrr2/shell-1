@@ -41,7 +41,7 @@ BeanCron: 0 0 10,20 * * ?
 # ================= 青龙变量，请根据自己青龙地址填写，不填写，则当前项目只用于提取CK，不对接青龙 =================
 ql: #这里不要动
   # 是否开启前端手动wskey转CK功能，默认false不启用，启用则修改为true
-  isWskeyToCK: false
+  isShowWskeyToCK: false
   # 是否启用短信功能，默认false不启用，启用则修改为true
   isShowDuanXin: false
   # 是否展示自定义CK环境,默认false不启用，启用则修改为true。用于新增通用CK提交，自定义青龙环境名称（name）、值（value）、备注（remarks），如提交快手CK
