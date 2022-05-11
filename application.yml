@@ -40,6 +40,16 @@ BeanCron: 0 0 10,20 * * ?
 
 # ================= 青龙变量，请根据自己青龙地址填写，不填写，则当前项目只用于提取CK，不对接青龙 =================
 ql: #这里不要动
+  # 是否开启前端手动wskey转CK功能，默认false不启用，启用则修改为true
+  isWskeyToCK: false
+  # 是否启用短信功能，默认false不启用，启用则修改为true
+  isShowDuanXin: false
+  # 是否展示自定义CK环境,默认false不启用，启用则修改为true。用于新增通用CK提交，自定义青龙环境名称（name）、值（value）、备注（remarks），如提交快手CK
+  isShowZiDingYi: false
+  # 自定义CK青龙环境名称，多个格式用英文@分割开，如JD_COOKIE@JD_WSCK@ksjsbCookie@CFD_COOKIE
+  nameList: ksjsbCookie@CFD_COOKIE
+  # 前端提示文字，当上方启用展示自定义CK环境功能时，请提示用户按照青龙环境格式填写对应的名称、值、备注,这里可作为提交教程展示
+  tip: Tip：提交CK前请先选好节点，请按照车主给出的教程格式填写通用CK类型名称、值、备注
   # 网站标题
   title: 京东短信车
   #公告
@@ -58,6 +68,8 @@ ql: #这里不要动
       ck_count: 40
       # 提交青龙Wskey上限数量(默认最多40个)
       wskey_count: 40
+      # 通用CK数量（默认40）
+      tyCK_count: 40
       # 建议一个青龙一个WxPusher 应用
       appToken:
 #    #青龙域名或者ip(不带/,示例1：http://www.baidu.com，示例2：http://119.xx.7x.2xx:5700,示例3：https://183.45.454.6:443或者https://t.me)
@@ -72,6 +84,8 @@ ql: #这里不要动
 #      ck_count: 40
 #      # 提交青龙Wskey上限数量(默认最多40个)
 #      wskey_count: 40
+#      # 通用CK数量（默认40）
+#      tyCK_count: 40
 #      # 建议一个青龙一个WxPusher 应用
 #      appToken:
 #    #青龙域名或者ip(不带/,示例1：http://www.baidu.com，示例2：http://119.xx.7x.2xx:5700,示例3：https://183.45.454.6:443或者https://t.me)
@@ -86,5 +100,7 @@ ql: #这里不要动
 #      ck_count: 40
 #      # 提交青龙Wskey上限数量(默认最多40个)
 #      wskey_count: 40
+#      # 通用CK数量（默认40）
+#      tyCK_count: 40
 #      # 建议一个青龙一个WxPusher 应用
 #      appToken:
