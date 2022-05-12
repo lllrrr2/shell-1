@@ -45,3 +45,8 @@ bash <(curl -s https://ghproxy.com/https://raw.githubusercontent.com/yuanter/she
 ```javascript
 bash <(curl -s https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/809ml/sub)
 ```
+
+### 快手6w金币环境
+```javascript
+https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/ksjsbjk.json
+```javascript
