@@ -29,6 +29,12 @@ wget -O application.yml https://ghproxy.com/https://raw.githubusercontent.com/yu
 ```
 
 
+### 京东短信车一键升级
+```javascript
+wget -O update_jd_cookie.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/update_jd_cookie.sh;chmod +x *sh;bash install.sh
+```
+
+
 ### 809免流环境安装
 ```javascript
 wget -O install.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/809ml/install.sh;chmod +x *sh;bash install.sh
