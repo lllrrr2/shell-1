@@ -23,9 +23,9 @@ case $param in
 		 esac
       ;; 
 		 
-    2) echo -e "${yellow}删除--link redis:redis模式启动脚本${plain}"; echo -e "\n"
-	esac
-;; 
+    2) echo -e "${yellow}删除--link redis:redis模式启动脚本${plain}"; echo -e "\n";;
+esac
+
 
 
 #获取当前路径
