@@ -42,20 +42,20 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 					echo "当前路径$jd_cookie_path下无application.yml文件，程序错误，退出程序："
 					exit 1
 				else
-					path = jd_cookie_path
+					path = $jd_cookie_path
 					cd $path
 			  fi
 			else
-				path = jd_cookie_path
+				path = $jd_cookie_path
 				cd $path
 			fi
 		else
-			path = $path/jd_cookie
+			path = "$path/jd_cookie"
 			cd $path/jd_cookie
 		fi
 	fi
 else
-	path = /root/jd_cookie
+	path = "/root/jd_cookie"
 	cd /root/jd_cookie
 fi
 
