@@ -82,7 +82,7 @@ else
 fi
 
 #删除脚本
-if [ -f "$path/update_jd_cookie.sh" ]; then
+if [ -f "$filePath/update_jd_cookie.sh" ]; then
   echo "删除当前脚本文件"
   rm -rf $filePath/update_jd_cookie.sh
 fi
