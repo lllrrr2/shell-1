@@ -7,7 +7,7 @@ cd /root/jd_cookie
 # 移除容器
 id=$(docker ps | grep "jd_cookie" | awk '{print $1}')
 echo -e $docker_id
-if [ -n "$id" ]
+if [ -n "$id" ];then
   docker rm -f $id
 fi
 #docker rm -f jd_cookie
