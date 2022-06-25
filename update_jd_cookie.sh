@@ -5,8 +5,6 @@ green='\033[0;32m'
 yellow='\033[0;33m'
 plain='\033[0m'
 
-mode = ""
-
 echo -e "\n请输入数字选择启动脚本模式:"
 echo "   1) 使用--link redis:redis模式启动"
 echo "   2) 删除--link redis:redis模式启动"
@@ -19,10 +17,8 @@ case $param in
        read -r -p "请确定使用该脚本的前提是，application.yml配置文件在jd_cookie文件夹，同时redis和jd_cookie两个容器是在同时关联启动? [Y/n]: " link_input
        case $link_input in
          [yY][eE][sS]|[yY]) 
-		 
 		 esac
-      ;; 
-		 
+		;; 
     2) echo -e "${yellow}删除--link redis:redis模式启动脚本${plain}"; echo -e "\n";;
 esac
 
@@ -64,13 +60,13 @@ fi
 
 # 先更新镜像
 docker pull yuanter/jd_cookie
+
 # 移除容器
 id=$(docker ps | grep "jd_cookie" | awk '{print $1}')
-echo -e '$id'
 if [ -n "$id" ]; then
   docker rm -f $id
 fi
-#docker rm -f jd_cookie
+
 #启动容器
 if  [ "${param}"=="1" ] ;then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $PWD/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
