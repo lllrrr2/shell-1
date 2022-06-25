@@ -14,7 +14,7 @@ echo "   2) 删除--link redis:redis模式启动"
 echo "   0) 退出"
 echo -ne "\n你的选择: "
 read param
-mode=$param;
+mode=$param
 case $param in
     0) echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
     1) echo -e "${yellow}使用--link redis:redis模式启动脚本${plain}"; echo -e "\n"
@@ -72,10 +72,10 @@ if [ -n "$id" ]; then
 fi
 
 #启动容器
-if  [ $mode=="1" ];then
+if  [ "$mode"=="1" ];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
     echo -e "${yellow}使用--link redis:redis模式启动成功${plain}"
-else if [ $mode=="2" ];then
+else if [ "$mode"=="2" ];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml yuanter/jd_cookie
     echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
 	fi
