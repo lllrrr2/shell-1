@@ -21,7 +21,7 @@ case $param in
        read -r -p "请确定使用该脚本的前提是，application.yml配置文件在jd_cookie文件夹，同时redis和jd_cookie两个容器是在同时关联启动? [Y/n]: " link_input
        case $link_input in
          [yY][eE][sS]|[yY]) ;;
-		 [nN][oO]) exit 1 ;;
+		 [nN][oO]|[nN]) exit 1 ;;
 		 esac
 		;; 
     2) echo -e "${yellow}删除--link redis:redis模式启动脚本${plain}"; echo -e "\n";;
