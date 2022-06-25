@@ -74,7 +74,6 @@ if  [[ $param == "1" ]];then
 else if [[ $param == "2" ]] ;then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $PWD/application.yml:/application.yml yuanter/jd_cookie
     echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
-	fi
 else
 	exit 1
 fi
