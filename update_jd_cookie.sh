@@ -29,6 +29,8 @@ case $param in
 
 #获取当前路径
 path=$PWD
+#当前文件路径
+filePath=$PWD
 
 
 # 先自行判断路径是否有配置文件跳
@@ -82,5 +84,5 @@ fi
 #删除脚本
 if [ -f "$path/update_jd_cookie.sh" ]; then
   echo "删除当前脚本文件"
-  rm -rf $path/update_jd_cookie.sh
+  rm -rf $filePath/update_jd_cookie.sh
 fi
