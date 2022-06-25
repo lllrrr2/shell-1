@@ -84,6 +84,6 @@ fi
 
 #删除脚本
 if [ -f "$filePath/update_jd_cookie.sh" ]; then
-  echo "${red}删除当前脚本文件${plain}"
+  echo "${green}删除当前脚本文件${plain}"
   rm -rf $filePath/update_jd_cookie.sh
 fi
