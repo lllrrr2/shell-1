@@ -13,8 +13,6 @@ fi
 #docker rm -f jd_cookie
 #启动容器
 docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $PWD/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
-#删除旧容器
-docker rmi $(docker images -f "dangling=true" -q)
 #删除脚本
 if [ -d "update_jd_cookie.sh" ];then
   rm -rf update_jd_cookie.sh
