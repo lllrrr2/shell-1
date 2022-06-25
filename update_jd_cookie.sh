@@ -61,7 +61,7 @@ fi
 
 #跳转至application.yml文件夹下
 cd $path
-echo -e "当前路径为：$PWD"
+echo -e "application.yml文件所在路径为：$PWD"
 
 # 先更新镜像
 docker pull yuanter/jd_cookie
@@ -83,6 +83,6 @@ fi
 
 #删除脚本
 if [ -f "$filePath/update_jd_cookie.sh" ]; then
-  echo  -e "${green}删除当前脚本文件${plain}"
-  rm -rf $filePath/update_jd_cookie.sh
+	rm -rf $filePath/update_jd_cookie.sh
+	echo  -e "${green}删除当前脚本文件成功${plain}"
 fi
