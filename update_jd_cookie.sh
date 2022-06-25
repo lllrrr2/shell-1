@@ -44,22 +44,20 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 					exit 1
 				else
 					path = $jd_cookie_path
-					cd $path
 			  fi
 			else
 				path = $jd_cookie_path
-				cd $path
 			fi
 		else
 			path = "$path/jd_cookie"
-			cd $path/jd_cookie
 		fi
 	fi
 else
-	path="/root/jd_cookie"
-	cd /root/jd_cookie
+	path="/root/jd_cookie";
 fi
 
+#跳转至application.yml文件夹下
+cd $path
 
 # 先更新镜像
 docker pull yuanter/jd_cookie
