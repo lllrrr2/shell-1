@@ -5,8 +5,8 @@ docker pull yuanter/jd_cookie
 # 跳转至jd_cookie目录
 cd /root/jd_cookie
 # 移除容器
-id=docker ps | grep "jd_cookie" | awk '{print $1}'
-echo -e $id
+id=$(docker ps | grep "jd_cookie" | awk '{print $1}')
+echo -e '$id'
 if [ -n "$id" ]; then
   docker rm -f $id
 fi
