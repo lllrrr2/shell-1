@@ -7,10 +7,10 @@ plain='\033[0m'
 
 mode = ""
 
-read -p "请输入数字选择启动脚本模式:\\n0、退出\\n1、使用--link redis:redis模式启动 \\n2、删除--link redis:redis模式启动 " param
+read -s -n1 -p "请输入数字选择启动脚本模式:\n0、退出\n1、使用--link redis:redis模式启动 \n2、删除--link redis:redis模式启动 " param
 case $param in
-    0) echo -e "\\n${yellow}退出脚本程序${plain}\\n"; exit(1) ;;
-    1) echo -e "\\n${yellow}使用--link redis:redis模式启动脚本${plain}\\n"; echo -e "\\n"
+    0) echo -e "\n${yellow}退出脚本程序${plain}\n"; exit(1) ;;
+    1) echo -e "\n${yellow}使用--link redis:redis模式启动脚本${plain}\n"; echo -e "\n"
        read -r -p "请确定使用该脚本的前提是，application.yml配置文件在jd_cookie文件夹，同时redis和jd_cookie两个容器是在同时关联启动? [Y/n]: " link_input
        case $link_input in
          [yY][eE][sS]|[yY]) 
@@ -18,7 +18,7 @@ case $param in
 		 esac
       ;; 
 		 
-    2) echo -e "\\n${yellow}删除--link redis:redis模式启动脚本${plain}\\n"; echo -e "\\n"
+    2) echo -e "\n${yellow}删除--link redis:redis模式启动脚本${plain}\n"; echo -e "\n"
 	
 
 
@@ -32,10 +32,10 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 		if [ ! -f "$path/jd_cookie/application.yml" ]; then
 			read -r -p "请输入文件application.yml所在文件夹的绝对路径：" jd_cookie_path
 			if [ ! -f "$jd_cookie_path/application.yml" ]; then
-				echo "当前路径$jd_cookie_path下无application.yml文件，请重新输入路径：\\n"
+				echo "当前路径$jd_cookie_path下无application.yml文件，请重新输入路径：\n"
 				read -r -p "请再次输入application.yml的绝对路径：" jd_cookie_path
 				if [ ! -f "$jd_cookie_path/application.yml" ]; then
-					echo "当前路径$jd_cookie_path下无application.yml文件，程序错误，退出程序：\\n"
+					echo "当前路径$jd_cookie_path下无application.yml文件，程序错误，退出程序：\n"
 					exit(1)
 				else
 					path = jd_cookie_path
