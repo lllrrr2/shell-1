@@ -21,6 +21,7 @@ case $param in
        read -r -p "请确定使用该脚本的前提是，application.yml配置文件在jd_cookie文件夹，同时redis和jd_cookie两个容器是在同时关联启动? [Y/n]: " link_input
        case $link_input in
          [yY][eE][sS]|[yY]) 
+		 [nN][oO]) exit 1
 		 esac
 		;; 
     2) echo -e "${yellow}删除--link redis:redis模式启动脚本${plain}"; echo -e "\n";;
@@ -38,11 +39,11 @@ filePath=$PWD
 if [ ! -f "/root/jd_cookie/application.yml" ]; then
 	if [ ! -f "$path/application.yml" ]; then
 		if [ ! -f "$path/jd_cookie/application.yml" ]; then
-			read -r -p "${yellow}请输入文件application.yml所在文件夹的绝对路径：${plain}" jd_cookie_path
+			read -r -p "请输入文件application.yml所在文件夹的绝对路径：" jd_cookie_path
 			path=$jd_cookie_path
 			if [ ! -f "$jd_cookie_path/application.yml" ]; then
 				echo -e "${yellow}当前路径$jd_cookie_path下无application.yml文件，请重新输入路径：${plain}"
-				read -r -p "${yellow}请再次输入application.yml的绝对路径：${plain}" jd_cookie_path
+				read -r -p "请再次输入application.yml的绝对路径：" jd_cookie_path
 				path=$jd_cookie_path
 				if [ ! -f "$jd_cookie_path/application.yml" ]; then
 					echo -e "${red}当前路径$jd_cookie_path下无application.yml文件，程序错误，退出程序：${plain}"
