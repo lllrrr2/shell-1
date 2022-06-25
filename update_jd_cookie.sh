@@ -6,7 +6,7 @@ yellow='\033[0;33m'
 plain='\033[0m'
 
 #使用模式
-mode=""
+num=""
 
 echo -e "\n请输入数字选择启动脚本模式:"
 echo "   1) 使用--link redis:redis模式启动"
@@ -14,7 +14,7 @@ echo "   2) 删除--link redis:redis模式启动"
 echo "   0) 退出"
 echo -ne "\n你的选择: "
 read param
-mode=$param
+num=$param
 case $param in
     0) echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
     1) echo -e "${yellow}使用--link redis:redis模式启动脚本${plain}"; echo -e "\n"
@@ -61,6 +61,7 @@ fi
 
 #跳转至application.yml文件夹下
 cd $path
+echo -e "当前路径为：$PWD"
 
 # 先更新镜像
 docker pull yuanter/jd_cookie
@@ -72,10 +73,10 @@ if [ -n "$id" ]; then
 fi
 
 #启动容器
-if  [ "$mode"==1 ];then
+if  [ "$num"==1 ];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
     echo -e "${yellow}使用--link redis:redis模式启动成功${plain}"
-else if [ "$mode"==2 ];then
+else if [ "$num"==2 ];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml yuanter/jd_cookie
     echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
 	fi
