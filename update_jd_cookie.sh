@@ -56,7 +56,7 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 		fi
 	fi
 else
-	path = "/root/jd_cookie"
+	path="/root/jd_cookie"
 	cd /root/jd_cookie
 fi
 
