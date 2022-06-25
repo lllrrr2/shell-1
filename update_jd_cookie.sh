@@ -7,7 +7,12 @@ plain='\033[0m'
 
 mode = ""
 
-read -s -n1 -p "请输入数字选择启动脚本模式:\n0、退出\n1、使用--link redis:redis模式启动 \n2、删除--link redis:redis模式启动 " param
+echo -e "\n请输入数字选择启动脚本模式:"
+echo "   1) 使用--link redis:redis模式启动"
+echo "   2) 删除--link redis:redis模式启动"
+echo "   0) 退出"
+echo -ne "\n你的选择: "
+read param
 case $param in
     0) echo -e "\n${yellow}退出脚本程序${plain}\n"; exit(1) ;;
     1) echo -e "\n${yellow}使用--link redis:redis模式启动脚本${plain}\n"; echo -e "\n"
