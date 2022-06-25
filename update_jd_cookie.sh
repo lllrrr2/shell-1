@@ -15,5 +15,6 @@ fi
 docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $PWD/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
 #删除脚本
 if [ -f "update_jd_cookie.sh" ]; then
+  echo "文件存在"
   rm -rf update_jd_cookie.sh
 fi
