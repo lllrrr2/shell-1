@@ -26,6 +26,7 @@ esac
 
 #获取当前路径
 path=$PWD
+echo $path
 #当前文件路径
 filePath=$PWD
 
