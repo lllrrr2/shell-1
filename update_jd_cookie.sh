@@ -14,7 +14,7 @@ echo "   0) 退出"
 echo -ne "\n你的选择: "
 read param
 case $param in
-    0) echo -e "${yellow}退出脚本程序${plain}"; exit(1) ;;
+    0) echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
     1) echo -e "${yellow}使用--link redis:redis模式启动脚本${plain}"; echo -e "\n"
        read -r -p "请确定使用该脚本的前提是，application.yml配置文件在jd_cookie文件夹，同时redis和jd_cookie两个容器是在同时关联启动? [Y/n]: " link_input
        case $link_input in
@@ -41,7 +41,7 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 				read -r -p "请再次输入application.yml的绝对路径：" jd_cookie_path
 				if [ ! -f "$jd_cookie_path/application.yml" ]; then
 					echo "当前路径$jd_cookie_path下无application.yml文件，程序错误，退出程序："
-					exit(1)
+					exit 1
 				else
 					path = jd_cookie_path
 					cd $path
@@ -76,7 +76,7 @@ else if [ "${param}"=="2" ] ;then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $PWD/application.yml:/application.yml yuanter/jd_cookie
     echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
 else
-	exit(1)
+	exit 1
 fi
 
 #删除脚本
