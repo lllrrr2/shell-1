@@ -38,21 +38,21 @@ filePath=$PWD
 if [ ! -f "/root/jd_cookie/application.yml" ]; then
 	if [ ! -f "$path/application.yml" ]; then
 		if [ ! -f "$path/jd_cookie/application.yml" ]; then
-			read -r -p "请输入文件application.yml所在文件夹的绝对路径：" jd_cookie_path
+			read -r -p "${yellow}请输入文件application.yml所在文件夹的绝对路径：${plain}" jd_cookie_path
+			path=$jd_cookie_path
 			if [ ! -f "$jd_cookie_path/application.yml" ]; then
-				echo "当前路径$jd_cookie_path下无application.yml文件，请重新输入路径："
-				read -r -p "请再次输入application.yml的绝对路径：" jd_cookie_path
+				echo -e "${yellow}当前路径$jd_cookie_path下无application.yml文件，请重新输入路径：${plain}"
+				read -r -p "${yellow}请再次输入application.yml的绝对路径：${plain}" jd_cookie_path
+				path=$jd_cookie_path
 				if [ ! -f "$jd_cookie_path/application.yml" ]; then
-					echo "当前路径$jd_cookie_path下无application.yml文件，程序错误，退出程序："
+					echo -e "${red}当前路径$jd_cookie_path下无application.yml文件，程序错误，退出程序：${plain}"
 					exit 1
 				else
-					path = "$jd_cookie_path"
-			  fi
-			else
-				path = "$jd_cookie_path"
+					path=$jd_cookie_path
+				fi
 			fi
 		else
-			path = "$path/jd_cookie"
+			path=$path/jd_cookie
 		fi
 	fi
 else
@@ -73,7 +73,6 @@ if [ -n "$id" ]; then
 fi
 
 #启动容器
-echo -e "num：$num"
 if  [ $num -eq 1 ];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
     echo -e "${yellow}使用--link redis:redis模式启动成功${plain}"
