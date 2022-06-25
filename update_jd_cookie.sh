@@ -73,10 +73,10 @@ if [ -n "$id" ]; then
 fi
 
 #启动容器
-if  [ "$num"==1 ];then
+if  [[ "$num"==1 ]];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
     echo -e "${yellow}使用--link redis:redis模式启动成功${plain}"
-else if [ "$num"==2 ];then
+else if [[ "$num"==2 ]];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml yuanter/jd_cookie
     echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
 	fi
