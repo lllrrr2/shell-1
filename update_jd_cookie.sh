@@ -79,11 +79,10 @@ if  [[ "$num"==1 ]];then
 else if [[ "$num"==2 ]];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml yuanter/jd_cookie
     echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
-	fi
 fi
 
 #删除脚本
 if [ -f "$filePath/update_jd_cookie.sh" ]; then
-  echo "${green}删除当前脚本文件${plain}"
+  echo  -e "${green}删除当前脚本文件${plain}"
   rm -rf $filePath/update_jd_cookie.sh
 fi
