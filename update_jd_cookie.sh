@@ -5,12 +5,16 @@ green='\033[0;32m'
 yellow='\033[0;33m'
 plain='\033[0m'
 
+#使用模式
+mode=""
+
 echo -e "\n请输入数字选择启动脚本模式:"
 echo "   1) 使用--link redis:redis模式启动"
 echo "   2) 删除--link redis:redis模式启动"
 echo "   0) 退出"
 echo -ne "\n你的选择: "
 read param
+mode=$param;
 case $param in
     0) echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
     1) echo -e "${yellow}使用--link redis:redis模式启动脚本${plain}"; echo -e "\n"
@@ -68,10 +72,10 @@ if [ -n "$id" ]; then
 fi
 
 #启动容器
-if  [ "$param"=="1" ];then
+if  [ $mode=="1" ];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
     echo -e "${yellow}使用--link redis:redis模式启动成功${plain}"
-else if [ "$param"=="2" ];then
+else if [ $mode=="2" ];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml yuanter/jd_cookie
     echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
 	fi
@@ -79,6 +83,6 @@ fi
 
 #删除脚本
 if [ -f "$filePath/update_jd_cookie.sh" ]; then
-  echo "删除当前脚本文件"
+  echo "${red}删除当前脚本文件${plain}"
   rm -rf $filePath/update_jd_cookie.sh
 fi
