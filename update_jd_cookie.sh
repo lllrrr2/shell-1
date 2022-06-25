@@ -50,10 +50,12 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 				cd $path
 			fi
 		else
+			path = $path/jd_cookie
 			cd $path/jd_cookie
 		fi
 	fi
 else
+	path = /root/jd_cookie
 	cd /root/jd_cookie
 fi
 
@@ -69,11 +71,12 @@ fi
 
 #启动容器
 if  [[ $param == "1" ]];then
-	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $PWD/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
+	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
     echo -e "${yellow}使用--link redis:redis模式启动成功${plain}"
 else if [[ $param == "2" ]] ;then
-	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $PWD/application.yml:/application.yml yuanter/jd_cookie
+	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml yuanter/jd_cookie
     echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
+	fi
 else
 	exit 1
 fi
