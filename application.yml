@@ -20,7 +20,8 @@ spring:
     host: redis
     #redis的密码（默认为空），如果运行redis时设置了密码，请对应填写
     password: 
-    port: 6379 #redis端口地址，默认6379
+    #redis端口地址，默认6379
+    port: 6379
 
 # ======================================= WxPusher 通知设置区域 ===========================================
 # 此处填你申请的 appToken. 官方文档：https://wxpusher.zjiecode.com/docs
