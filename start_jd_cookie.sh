@@ -12,8 +12,7 @@ plain='\033[0m'
 path=$PWD
 #当前文件路径
 filePath=$PWD
-
-
+mkdir -p  jd_cookie
 
 # 先自行判断路径是否有配置文件跳
 echo -e "${yellow}检测application.yml配置文件中...${plain}\n"
@@ -21,9 +20,7 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 	if [ ! -f "$path/application.yml" ]; then
 		if [ ! -f "$path/jd_cookie/application.yml" ]; then
 			echo -e "${yellow}检测到application.yml配置文件不存在，开始下载一份示例文件用于初始化...${plain}\n"
-			wget -O $path/jd_cookie/application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml
-			echo -e "${yellow}当前新下载的application.yml文件所在路径为：$PWD${plain}"
-			path=$path/jd_cookie
+			wget -O $path/jd_cookie/application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml && echo -e "${yellow}当前新下载的application.yml文件所在路径为：$PWD${plain}" && path=$path/jd_cookie
 		else
 			path=$path/jd_cookie
 		fi
@@ -133,3 +130,5 @@ if [ -f "$filePath/start_jd_cookie.sh" ]; then
 fi
 
 echo  -e "${green}jd_cookie启动成功${plain}"
+
+
