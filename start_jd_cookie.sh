@@ -14,37 +14,16 @@ path=$PWD
 filePath=$PWD
 
 
+
 # 先自行判断路径是否有配置文件跳
+echo -e "${yellow}检测application.yml配置文件中...${plain}\n"
 if [ ! -f "/root/jd_cookie/application.yml" ]; then
 	if [ ! -f "$path/application.yml" ]; then
 		if [ ! -f "$path/jd_cookie/application.yml" ]; then
-			echo -e "${yellow}检测application.yml配置文件中...${plain}\n"
-			read -r -p "当是否拥有application.yml文件？ [Y/n]: " is_have
-			case $is_have in
-				[yY][eE][sS]|[yY]) 
-					read -r -p "请输入文件application.yml所在文件夹的绝对路径：" jd_cookie_path
-					path=$jd_cookie_path
-					if [ ! -f "$jd_cookie_path/application.yml" ]; then
-						echo -e "${yellow}当前路径$jd_cookie_path下无application.yml文件，请重新输入路径：${plain}"
-						read -r -p "请再次输入application.yml的绝对路径：" jd_cookie_path
-						path=$jd_cookie_path
-						if [ ! -f "$jd_cookie_path/application.yml" ]; then
-							echo "检测到application.yml配置文件不存在，开始下载一份示例文件用于初始化...\n"
-							wget -O application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml
-							echo -e "当前新下载的application.yml文件所在路径为：$PWD"
-							path=$PWD
-						else
-							path=$jd_cookie_path
-						fi
-					fi
-				;;
-				[nN][oO]|[nN]) 
-					echo -e "检测到application.yml配置文件不存在，开始下载一份示例文件用于初始化...\n"
-					wget -O application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml
-					echo -e "当前新下载的application.yml文件所在路径为：$PWD"
-					path=$PWD
-				;;
-			esac
+			echo -e "${yellow}检测到application.yml配置文件不存在，开始下载一份示例文件用于初始化...${plain}\n"
+			wget -O $path/jd_cookie/application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml
+			echo -e "${yellow}当前新下载的application.yml文件所在路径为：$PWD${plain}"
+			path=$path/jd_cookie
 		else
 			path=$path/jd_cookie
 		fi
@@ -154,5 +133,3 @@ if [ -f "$filePath/start_jd_cookie.sh" ]; then
 fi
 
 echo  -e "${green}jd_cookie启动成功${plain}"
-
-
