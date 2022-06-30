@@ -28,8 +28,7 @@ wget -O install.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter
 wget -O application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml
 ```
 
-### 京东短信车一键升级
-请注意，使用该脚本的前提是，application.yml配置文件在jd_cookie文件夹，同时redis和jd_cookie两个容器是在同时关联启动
+### 京东短信车redis+安装/升级一键脚本
 ```javascript
 wget -O jd_cookie.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie.sh;chmod +x *sh;bash jd_cookie.sh
 ```
