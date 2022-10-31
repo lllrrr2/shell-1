@@ -20,7 +20,7 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 	if [ ! -f "$path/application.yml" ]; then
 		if [ ! -f "$path/jd_cookie/application.yml" ]; then
 			echo -e "${yellow}检测到application.yml配置文件不存在，开始下载一份示例文件用于初始化...${plain}\n"
-			wget -O $path/jd_cookie/application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml && echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/jd_cookie${plain}" && path=$path/jd_cookie
+			wget -O $path/jd_cookie/application.yml   --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml && echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/jd_cookie${plain}" && path=$path/jd_cookie
 		else
 			path=$path/jd_cookie
 		fi
