@@ -44,9 +44,9 @@ case $input in
 		echo -e "${yellow}redis启动成功${plain}"
 		echo -e "\n";;
     2)	echo -e "${yellow}开始安装jd_cookie${plain}"; echo -e "\n"
-		wget -O start_jd_cookie.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/start_jd_cookie.sh;chmod +x *sh;bash start_jd_cookie.sh
+		wget -O start_jd_cookie.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/start_jd_cookie.sh;chmod +x *sh;bash start_jd_cookie.sh
 	;;
 	3)	echo -e "${yellow}开始安装jd_cookie${plain}"; echo -e "\n"
-		wget -O update_jd_cookie.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/update_jd_cookie.sh;chmod +x *sh;bash update_jd_cookie.sh
+		wget -O update_jd_cookie.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/update_jd_cookie.sh;chmod +x *sh;bash update_jd_cookie.sh
 	;;
 esac
