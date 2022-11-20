@@ -22,14 +22,14 @@ case $input in
     1)	echo -e "${yellow}安装redis容器${plain}\n"; 
 		echo -e "${yellow}正在拉取redis容器中...${plain}\n"; 
 		docker pull redis
-		echo -e "${yellow}请输入redis密码：${plain}\n"; 
+		echo -e "${yellow}请输入redis密码(不要设置简单且带特殊字符密码)：${plain}"; 
 		read  psw
 		if  [ ! -n "${psw}" ] ;then
 			psw="";
 			echo -e "${yellow}redis未使用密码${plain}\n"
 		fi
 		
-		echo -e "${yellow}请输入redis的端口：${plain}"; 
+		echo -e "${yellow}请输入redis的端口(默认6379)：${plain}"; 
 		read  port
 		if  [ ! -n "${port}" ] ;then
 			port=6379;
