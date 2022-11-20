@@ -63,8 +63,8 @@ echo -e "\n${yellow}设置redis的密码(默认为空): ${plain}"
 read -r -p "请输入启动redis时设置的密码，不带特殊字符：" password
 grep -rnl 'password:'  $path/application.yml | xargs sed -i -r "s/password:.*$/password: $password/g" >/dev/null 2>&1
 # 配置端口
-echo -e "\n${yellow}设置redis的端口(回车默认6379，当使用--link模式启动时，请使用6379端口)：${plain}"
-echo -e "\n${yellow}请输入端口(建议使用6379)：${plain}"
+echo -e "\n${yellow}设置redis的端口(回车默认6379，当使用--link模式启动时，请使用6379端口)${plain}"
+echo -e "${yellow}请输入端口(建议使用6379)：${plain}"
 read port
 if  [ ! -n "${port}" ] ;then
 	port=6379;
