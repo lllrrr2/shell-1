@@ -62,7 +62,7 @@ ql: #这里不要动
   # 多容器请按照注释部分（要对齐符号-才是正确的格式）
   containers: #这里不要动
     #青龙域名或者ip(不带/,示例1：http://www.baidu.com，示例2：http://119.xx.7x.2xx:5700,示例3：https://183.45.454.6:443或者https://t.me)
-    - host:
+#    - host:
 #      # 青龙client_id
 #      client_id:
 #      # 青龙client_secret
