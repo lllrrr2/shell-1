@@ -63,20 +63,20 @@ ql: #这里不要动
   containers: #这里不要动
     #青龙域名或者ip(不带/,示例1：http://www.baidu.com，示例2：http://119.xx.7x.2xx:5700,示例3：https://183.45.454.6:443或者https://t.me)
     - host:
-      # 青龙client_id
-      client_id:
-      # 青龙client_secret
-      client_secret:
-      # 服务器名称，默认按顺序加载，如服务器1，服务器2
-      ql_name: 青龙节点1
-      #提交青龙CK上限数量(默认最多40个)
-      ck_count: 40
-      # 提交青龙Wskey上限数量(默认最多40个)
-      wskey_count: 40
-      # 通用CK数量（默认40）
-      tyCK_count: 40
-      # 建议一个青龙一个WxPusher 应用
-      appToken:
+#      # 青龙client_id
+#      client_id:
+#      # 青龙client_secret
+#      client_secret:
+#      # 服务器名称，默认按顺序加载，如服务器1，服务器2
+#      ql_name: 青龙节点1
+#      #提交青龙CK上限数量(默认最多40个)
+#      ck_count: 40
+#      # 提交青龙Wskey上限数量(默认最多40个)
+#      wskey_count: 40
+#      # 通用CK数量（默认40）
+#      tyCK_count: 40
+#      # 建议一个青龙一个WxPusher 应用
+#      appToken:
 #    #青龙域名或者ip(不带/,示例1：http://www.baidu.com，示例2：http://119.xx.7x.2xx:5700,示例3：https://183.45.454.6:443或者https://t.me)
 #    - host:
 #      # 青龙client_id
