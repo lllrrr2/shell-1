@@ -63,8 +63,8 @@ echo -e "\n${yellow}设置redis的密码(默认为空): ${plain}"
 read -r -p "请输入启动redis时设置的密码，不带特殊字符：" password
 grep -rnl 'password:'  $path/application.yml | xargs sed -i -r "s/password:.*$/password: $password/g" >/dev/null 2>&1
 # 配置端口
-echo -e "\n${yellow}设置redis的端口(默认6379)：${plain}"
-echo -e "\n${yellow}请输入端口：${plain}"
+echo -e "\n${yellow}设置redis的端口(回车默认6379，当使用--link模式启动时，请使用6379端口)：${plain}"
+echo -e "\n${yellow}请输入端口(建议使用6379)：${plain}"
 read port
 if  [ ! -n "${port}" ] ;then
 	port=6379;
@@ -95,31 +95,31 @@ fi
 num=""
 
 echo -e "\n${yellow}请输入数字选择启动脚本模式：${plain}"
-echo "   1) 使用--link redis:redis模式启动"
-echo "   2) 删除--link redis:redis模式启动"
+echo "   1) 使用--link模式(redis容器和jd_cookie容器在同一主机，符号条件推荐使用该模式)启动"
+echo "   2) 以普通模式启动"
 echo "   0) 退出"
 echo -ne "\n你的选择："
 read param
 num=$param
 case $param in
     0) echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
-    1) echo -e "${yellow}使用--link redis:redis模式启动脚本${plain}"; echo -e "\n"
-       read -r -p "请确定使用该脚本的前提是redis和jd_cookie两个容器在同时关联启动? [Y/n]: " link_input
+    1) echo -e "${yellow}使用--link模式启动脚本${plain}"; echo -e "\n"
+       read -r -p "请确定使用该脚本的前提是redis是使用本脚本安装的容器且redis端口为6379，同时和jd_cookie容器在同一个主机? [Y/n]: " link_input
        case $link_input in
          [yY][eE][sS]|[yY]) ;;
 		 [nN][oO]|[nN]) exit 1 ;;
 		 esac
 		;; 
-    2) echo -e "${yellow}删除--link redis:redis模式启动脚本${plain}"; echo -e "\n";;
+    2) echo -e "${yellow}以普通模式启动脚本${plain}"; echo -e "\n";;
 esac
 
 #启动容器
 if  [ $num -eq 1 ];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml --link redis:redis yuanter/jd_cookie
-    echo -e "${yellow}使用--link redis:redis模式启动成功${plain}"
+    echo -e "${yellow}使用--link模式启动成功${plain}"
 else if [ $num -eq 2 ];then
 	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v $path/application.yml:/application.yml yuanter/jd_cookie
-    echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
+    echo -e "${yellow}以普通模式启动成功${plain}"
 	fi
 fi
 
