@@ -19,10 +19,9 @@ id=$(docker ps | grep "redis" | awk '{print $1}')
 id1=$(docker ps -a | grep "redis" | awk '{print $1}')
 if [ -n "$id" ]; then
   docker rm -f $id
-else if [ -n "$id1" ]; then
+elif [ -n "$id1" ]; then
   docker rm -f $id1
-  fi
-else; then
+else
   echo -e "${yellow}检测到还未安装redis镜像，本项目依赖redis数据库，是否安装redis镜像${plain}"; echo -e "\n"
   echo "   1) 安装redis"
   echo "   0) 退出整个脚本安装程序"
@@ -43,7 +42,6 @@ else; then
             fi
         ;;
   esac
-  fi
 fi
 
 
