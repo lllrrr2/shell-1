@@ -22,7 +22,7 @@ if [ -n "$id" ]; then
 else if [ -n "$id1" ]; then
   docker rm -f $id1
   fi
-else
+else; then
   echo -e "${yellow}检测到还未安装redis镜像，本项目依赖redis数据库，是否安装redis镜像${plain}"; echo -e "\n"
   echo "   1) 安装redis"
   echo "   0) 退出整个脚本安装程序"
