@@ -5,7 +5,7 @@ green='\033[0;32m'
 yellow='\033[0;33m'
 plain='\033[0m'
 
-echo -e "${yellow}正在升级安装jd_cookie中...${plain}"; echo -e "\n"
+echo -e "${yellow}正在升级安装jd_cookie中...${plain}";
 
 
 #使用模式
@@ -20,7 +20,7 @@ read param
 num=$param
 case $param in
     0) echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
-    1) echo -e "${yellow}使用--link redis:redis模式启动脚本${plain}"; echo -e "\n"
+    1) echo -e "${yellow}使用--link redis:redis模式启动脚本${plain}";
        read -r -p "请确定使用该脚本的前提是，application.yml配置文件在jd_cookie文件夹，同时redis和jd_cookie两个容器是在同时关联启动? [Y/n]: " link_input
        case $link_input in
          [yY][eE][sS]|[yY]) ;;
