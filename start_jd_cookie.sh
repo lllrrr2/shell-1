@@ -170,6 +170,6 @@ fi
 
 echo  -e "${green}jd_cookie启动成功${plain}"
 ip_url=$(curl -s ifconfig.me)
-echo  -e "${green}启动地址：http://ip_url:1170${plain}"
+echo  -e "${yellow}启动地址：http://$ip_url:1170${plain}"
 
 
