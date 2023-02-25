@@ -68,6 +68,19 @@ cd $path
 echo -e "application.yml文件所在路径为：$PWD"
 
 
+#判断redis是否启动了
+redis_id=$(docker ps -a | grep "redis" | awk '{print $1}')
+redis_id1=$(docker ps -a | grep "redis" | awk '{print $1}')
+if [ -n "$redis_id" ]; then
+  #docker rm -f $redis_id
+  docker restart $redis_id
+else if [ -n "$redis_id1" ]; then
+  #docker rm -f $redis_id1
+  docker restart $redis_id1
+  fi
+fi
+
+
 # 移除容器
 id=$(docker ps | grep "jd_cookie" | awk '{print $1}')
 id1=$(docker ps -a | grep "jd_cookie" | awk '{print $1}')
@@ -78,7 +91,7 @@ else if [ -n "$id1" ]; then
   fi
 fi
 
-# 先更新镜像
+# 先更新jd_cookie镜像
 docker pull yuanter/jd_cookie:latest
 
 #启动容器
