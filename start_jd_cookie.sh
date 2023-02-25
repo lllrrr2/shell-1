@@ -28,7 +28,7 @@ else
   read input
   case $input in
         0)	echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
-        1)	echo -e "${yellow}正在拉取安装redis脚本${plain}"; echo -e "\n"
+        1)	echo -e "${yellow}正在拉取安装redis脚本${plain}";
             echo -e "${yellow}下载脚本模式${plain}";
             echo "   1) 国内模式，启用加速"
             echo "   2) 国外模式，不加速"

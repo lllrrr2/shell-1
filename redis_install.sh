@@ -55,8 +55,8 @@ if [ -f "$filePath/redis_install.sh" ]; then
 fi
 
 
-echo -e "${yellow}redis启动成功${plain}"
-echo -e "${yellow}请牢记，redis端口（记得开放防火墙端口）为：${port}\n密码：$psw${plain}"
+echo -e "${green}redis启动成功${plain}"
+echo -e "${green}请牢记，redis端口（记得开放防火墙端口）为：${port}\n密码：$psw${plain}"
 echo -e "\n"
 
 
