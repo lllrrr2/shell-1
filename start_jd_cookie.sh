@@ -60,7 +60,7 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 	if [ ! -f "$path/application.yml" ]; then
 		if [ ! -f "$path/jd_cookie/application.yml" ]; then
 			echo -e "${yellow}检测到application.yml配置文件不存在，开始下载一份示例文件用于初始化...${plain}\n"
-			echo -e "${yellow}下载脚本模式${plain}";
+			echo -e "${yellow}下载配置文件application.yml模式${plain}";
             echo "   1) 国内模式，启用加速下载"
             echo "   2) 国外模式，不加速"
             echo -ne "\n你的选择："
