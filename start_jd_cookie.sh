@@ -60,7 +60,20 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 	if [ ! -f "$path/application.yml" ]; then
 		if [ ! -f "$path/jd_cookie/application.yml" ]; then
 			echo -e "${yellow}检测到application.yml配置文件不存在，开始下载一份示例文件用于初始化...${plain}\n"
-			wget -O $path/jd_cookie/application.yml  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml && echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/jd_cookie${plain}" && path=$path/jd_cookie
+			echo -e "${yellow}下载脚本模式${plain}";
+            echo "   1) 国内模式，启用加速下载"
+            echo "   2) 国外模式，不加速"
+            echo -ne "\n你的选择："
+            read  is_speed_yml_file
+            case $is_speed_yml_file in
+                1) 	echo "国内模式下载配置文件application.yml中。。。"
+                    wget -O $path/jd_cookie/application.yml  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml && echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/jd_cookie${plain}" && path=$path/jd_cookie
+                ;;
+                2) 	echo "国外模式下载配置文件application.yml中。。。"
+                    wget -O $path/jd_cookie/application.yml  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/application.yml && echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/jd_cookie${plain}" && path=$path/jd_cookie
+                ;;
+            esac
+
 		else
 			path=$path/jd_cookie
 		fi
