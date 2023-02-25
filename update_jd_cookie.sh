@@ -49,7 +49,7 @@ if [ ! -f "/root/jd_cookie/application.yml" ]; then
 				read -r -p "请再次输入application.yml的绝对路径：" jd_cookie_path
 				path=$jd_cookie_path
 				if [ ! -f "$jd_cookie_path/application.yml" ]; then
-					echo -e "${red}当前路径$jd_cookie_path下无application.yml文件，程序错误，退出程序：${plain}"
+					echo -e "${red}当前路径$jd_cookie_path下无application.yml文件，程序错误，请重新安装jd_cookie，退出程序：${plain}"
 					exit 1
 				else
 					path=$jd_cookie_path
