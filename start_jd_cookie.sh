@@ -29,17 +29,23 @@ else
   case $input in
         0)	echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
         1)	echo -e "${yellow}正在拉取安装redis脚本${plain}"; echo -e "\n"
-            echo -e "${yellow}是否使用加速镜像(适用国内网络)下载安装脚本${plain}"; echo -e "\n"
-            read  is_speed_three
-            if  [ ! -n "${is_speed_three}" ] ;then
-                wget -O redis_install.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh
-                chmod +x *sh
-                bash redis_install.sh
-            else
-                wget -O redis_install.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh;
-                chmod +x *sh
-                bash redis_install.sh
-            fi
+            echo -e "${yellow}下载脚本模式${plain}";
+            echo "   1) 国内模式，启用加速"
+            echo "   2) 国外模式，不加速"
+            echo -ne "\n你的选择："
+            read  is_speed_two
+            case $is_speed_two in
+                1) 	echo "国内模式下载安装脚本中。。。"
+                    wget -O redis_install.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh
+                    chmod +x *sh
+                    bash redis_install.sh
+                ;;
+                2) 	echo "国外模式下载安装脚本中。。。"
+                    wget -O redis_install.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh;
+                    chmod +x *sh
+                    bash redis_install.sh
+                ;;
+            esac
         ;;
   esac
 fi
