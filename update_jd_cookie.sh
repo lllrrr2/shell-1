@@ -5,6 +5,9 @@ green='\033[0;32m'
 yellow='\033[0;33m'
 plain='\033[0m'
 
+echo -e "${yellow}正在升级安装jd_cookie中...${plain}"; echo -e "\n"
+
+
 #使用模式
 num=""
 
@@ -64,8 +67,6 @@ fi
 cd $path
 echo -e "application.yml文件所在路径为：$PWD"
 
-# 先更新镜像
-docker pull yuanter/jd_cookie
 
 # 移除容器
 id=$(docker ps | grep "jd_cookie" | awk '{print $1}')
@@ -76,6 +77,10 @@ else if [ -n "$id1" ]; then
   docker rm -f $id1
   fi
 fi
+
+# 先更新镜像
+docker rmi yuanter/jd_cookie:latest
+docker pull yuanter/jd_cookie:latest
 
 #启动容器
 if  [ $num -eq 1 ];then

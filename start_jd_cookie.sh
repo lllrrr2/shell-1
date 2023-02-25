@@ -5,7 +5,7 @@ green='\033[0;32m'
 yellow='\033[0;33m'
 plain='\033[0m'
 
-
+echo -e "${yellow}开始安装jd_cookie${plain}"; echo -e "\n"
 
 
 #获取当前路径
@@ -13,6 +13,35 @@ path=$PWD
 #当前文件路径
 filePath=$PWD
 mkdir -p  jd_cookie
+
+#判断是否已安装redis镜像
+id=$(docker ps | grep "redis" | awk '{print $1}')
+id1=$(docker ps -a | grep "redis" | awk '{print $1}')
+if [ -n "$id" ]; then
+  docker rm -f $id
+else if [ -n "$id1" ]; then
+  docker rm -f $id1
+  fi
+else
+  echo -e "${yellow}检测到还未安装redis镜像，本项目依赖redis数据库，是否安装redis镜像${plain}"; echo -e "\n"
+  echo "   1) 安装redis"
+  echo "   0) 退出整个脚本安装程序"
+  read input
+  case $input in
+        0)	echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
+        1)	echo -e "${yellow}正在拉取安装redis脚本${plain}"; echo -e "\n"
+            echo -e "${yellow}是否使用加速镜像(适用国内网络)下载安装脚本${plain}"; echo -e "\n"
+            read  is_speed_three
+            if  [ ! -n "${is_speed_three}" ] ;then
+                wget -O redis_install.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh;chmod +x *sh;bash redis_install.sh
+            else
+                wget -O redis_install.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh;chmod +x *sh;bash redis_install.sh
+            fi
+        ;;
+  esac
+fi
+
+
 
 # 先自行判断路径是否有配置文件跳
 echo -e "${yellow}检测application.yml配置文件中...${plain}\n"
@@ -74,12 +103,6 @@ grep -rnl 'port: '  $path/application.yml | xargs sed -i -r "s/port: [^port: 117
 
 
 
-
-
-# 更新镜像
-echo -e "\n${yellow}更新最新镜像中...${plain}"
-docker pull yuanter/jd_cookie
-
 # 移除容器
 id=$(docker ps | grep "jd_cookie" | awk '{print $1}')
 id1=$(docker ps -a | grep "jd_cookie" | awk '{print $1}')
@@ -89,6 +112,13 @@ else if [ -n "$id1" ]; then
   docker rm -f $id1
   fi
 fi
+
+
+# 更新镜像
+echo -e "\n${yellow}更新最新镜像中...${plain}"
+docker rmi yuanter/jd_cookie:latest
+docker pull yuanter/jd_cookie:latest
+
 
 
 #使用模式
@@ -130,5 +160,7 @@ if [ -f "$filePath/start_jd_cookie.sh" ]; then
 fi
 
 echo  -e "${green}jd_cookie启动成功${plain}"
+ip_url=$(curl -s ifconfig.me)
+echo  -e "${green}启动地址：http://ip_url:1170${plain}"
 
 
