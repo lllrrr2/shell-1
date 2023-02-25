@@ -99,3 +99,5 @@ if [ -f "$filePath/update_jd_cookie.sh" ]; then
 fi
 
 echo  -e "${green}升级成功${plain}"
+ip_url=$(curl -s ifconfig.me)
+echo  -e "${yellow}启动地址：http://$ip_url:1170${plain}"
