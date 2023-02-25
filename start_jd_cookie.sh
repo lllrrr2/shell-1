@@ -33,9 +33,13 @@ else
             echo -e "${yellow}是否使用加速镜像(适用国内网络)下载安装脚本${plain}"; echo -e "\n"
             read  is_speed_three
             if  [ ! -n "${is_speed_three}" ] ;then
-                wget -O redis_install.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh;chmod +x *sh;bash redis_install.sh
+                wget -O redis_install.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh
+                chmod +x *sh
+                bash redis_install.sh
             else
-                wget -O redis_install.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh;chmod +x *sh;bash redis_install.sh
+                wget -O redis_install.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh;
+                chmod +x *sh
+                bash redis_install.sh
             fi
         ;;
   esac
