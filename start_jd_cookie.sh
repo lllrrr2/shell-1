@@ -18,9 +18,11 @@ mkdir -p  jd_cookie
 id=$(docker ps | grep "redis" | awk '{print $1}')
 id1=$(docker ps -a | grep "redis" | awk '{print $1}')
 if [ -n "$id" ]; then
-  docker rm -f $id
+  #docker rm -f $id
+  echo -e "${yellow}检测到已安装redis镜像，跳过安装redis镜像过程${plain}"
 elif [ -n "$id1" ]; then
-  docker rm -f $id1
+  #docker rm -f $id1
+  echo -e "${yellow}检测到已安装redis镜像，跳过安装redis镜像过程${plain}"
 else
   echo -e "${yellow}检测到还未安装redis镜像，本项目依赖redis数据库，是否安装redis镜像${plain}"; echo -e "\n"
   echo "   1) 安装redis"
