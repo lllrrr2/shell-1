@@ -25,7 +25,6 @@ fi
 
 
 # 安装redis镜像
-docker rmi redis
 echo -e "${yellow}正在拉取redis容器中...${plain}\n";
 docker pull redis
 echo -e "${yellow}请输入redis密码(不要设置简单且带特殊字符密码)：${plain}";

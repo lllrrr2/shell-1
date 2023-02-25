@@ -79,7 +79,6 @@ else if [ -n "$id1" ]; then
 fi
 
 # 先更新镜像
-docker rmi yuanter/jd_cookie:latest
 docker pull yuanter/jd_cookie:latest
 
 #启动容器

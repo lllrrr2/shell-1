@@ -127,7 +127,6 @@ fi
 
 # 更新镜像
 echo -e "\n${yellow}更新最新镜像中...${plain}"
-docker rmi yuanter/jd_cookie:latest
 docker pull yuanter/jd_cookie:latest
 
 
