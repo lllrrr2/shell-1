@@ -161,7 +161,7 @@ num=$param
 case $param in
     0) echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
     1) echo -e "${yellow}使用--link模式启动脚本${plain}"; echo -e "\n"
-       read -r -p "请确定使用该脚本的前提是redis是使用本脚本安装的容器且redis端口为6379，同时和flycloud容器在同一个主机? [Y/n]: " link_input
+       read -r -p "请确定使用该脚本的前提是redis是使用本脚本安装的容器且redis端口为6379，同时和flycloud容器在同一个主机? [y/n]: " link_input
        case $link_input in
          [yY][eE][sS]|[yY]) ;;
 		 [nN][oO]|[nN]) exit 1 ;;
