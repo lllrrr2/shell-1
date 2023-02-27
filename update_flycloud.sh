@@ -12,8 +12,8 @@ echo -e "${yellow}正在升级安装flycloud中...${plain}";
 num=""
 
 echo -e "\n请输入数字选择启动脚本模式:"
-echo "   1) 使用--link redis:redis模式启动"
-echo "   2) 删除--link redis:redis模式启动"
+echo "   1) 使用--link redis:redis模式"
+echo "   2) 普通模式"
 echo "   0) 退出"
 echo -ne "\n你的选择: "
 read param
@@ -27,7 +27,7 @@ case $param in
 		 [nN][oO]|[nN]) exit 1 ;;
 		 esac
 		;;
-    2) echo -e "${yellow}删除--link redis:redis模式启动脚本${plain}"; echo -e "\n";;
+    2) echo -e "${yellow}以普通模式启动脚本${plain}"; echo -e "\n";;
 esac
 
 
@@ -100,7 +100,7 @@ if  [ $num -eq 1 ];then
     echo -e "${yellow}使用--link redis:redis模式启动成功${plain}"
 else if [ $num -eq 2 ];then
 	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud yuanter/flycloud
-    echo -e "${yellow}删除--link redis:redis模式启动成功${plain}"
+    echo -e "${yellow}普通模式启动成功${plain}"
 	fi
 fi
 
