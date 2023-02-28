@@ -9,77 +9,6 @@ plain='\033[0m'
 
 
 
-
-check_install() {
-    if [ ! -f "${filePath}/flycloud/app.jar" ]; then
-       echo -e "[INFO] 检测到当前不存在jar文件，即将下载文件"
-       mkdir -p flycloud && cd flycloud || exit
-       wget -O ${filePath}/flycloud/app.jar  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/app.jar >/dev/null 2>&1
-       if [ $? -ne 0 ]; then
-         echo -e "[Error] 下载二进制文件失败，请检查网络或重新执行本脚本" && exit 2
-       fi
-    fi
-    if [ ! -d "${filePath}/flycloud/statics" ]; then
-      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
-      cd flycloud || exit
-      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
-      if [ $? -ne 0 ]; then
-        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
-      fi
-      tar -zxvf statics.tar.gz && rm -rf statics.tar.gz
-      echo -e "[SUCCESS] 下载静态成功"
-    fi
-}
-
-update_soft() {
-  if [ -d "${filePath}/flycloud" ]; then
-    cd "${filePath}" || exit
-    echo -e "[INFO] 检测到当前已安装FlyCloud，即将下载更新文件"
-    mkdir -p tmp && cd tmp || exit
-    wget -O ${filePath}/flycloud/app.jar  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/app.jar >/dev/null 2>&1
-    # shellcheck disable=SC2181
-    if [ $? -ne 0 ]; then
-      echo -e "[Error] 下载文件失败，请检查网络或重新执行本脚本" && cd .. && rm -rf tmp && exit 2
-    fi
-    if [ ! -d "${filePath}/flycloud/statics" ]; then
-      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
-      cd flycloud || exit
-      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
-      if [ $? -ne 0 ]; then
-        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
-      fi
-      tar -zxvf statics.tar.gz && rm -rf statics.tar.gz
-      echo -e "[SUCCESS] 下载静态成功"
-    fi
-    cd .. && rm -rf tmp
-    echo -e "[SUCCESS] 更新二进制文件成功"
-  fi
-}
-
-check_update() {
-  new_version=$(curl -s "https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/new_version")
-
-  echo -e "[SUCCESS] 当前最新版本为：${new_version}"
-  if [ -d "${filePath}/flycloud" ]; then
-    cd ${filePath} || exit
-    old_version=$(curl -s "https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/old_version")
-    if version_gt "${new_version}" "${old_version}"; then
-      update_soft
-    fi
-  else
-    check_install
-  fi
-}
-
-version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
-
-
-
-
-
-
-
-
 echo -e "${yellow}正在升级安装flycloud中...${plain}";
 
 
@@ -228,7 +157,6 @@ elif [ -n "$id1" ]; then
 else
   # 先更新flycloud镜像
   docker pull yuanter/flycloud:latest
-
   #启动容器
   if  [ $num -eq 1 ];then
   	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud --link redis:redis yuanter/flycloud
@@ -238,8 +166,9 @@ else
       echo -e "${yellow}普通模式启动成功${plain}"
   	fi
   fi
-
 fi
+
+
 
 
   #删除脚本
@@ -251,4 +180,70 @@ fi
   echo  -e "${green}升级成功${plain}"
   ip_url=$(curl -s ifconfig.me)
   echo  -e "${yellow}请网页打开本项目地址：http://$ip_url:1170${plain}"
+
+
+check_install() {
+    if [ ! -d "${filePath}/flycloud/statics" ]; then
+      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
+      cd flycloud || exit
+      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
+      if [ $? -ne 0 ]; then
+        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
+      fi
+      tar -zxvf statics.tar.gz && rm -rf statics.tar.gz
+      echo -e "[SUCCESS] statics下载静态成功"
+    fi
+    if [ ! -f "${filePath}/flycloud/app.jar" ]; then
+       echo -e "[INFO] 检测到当前不存在jar文件，即将下载文件"
+       mkdir -p flycloud && cd flycloud || exit
+       wget -O ${filePath}/flycloud/app.jar  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/app.jar >/dev/null 2>&1
+       if [ $? -ne 0 ]; then
+         echo -e "[Error] 下载二进制文件失败，请检查网络或重新执行本脚本" && exit 2
+       fi
+       cd ${filePath}/flycloud && docker restart flycloud
+    fi
+}
+
+update_soft() {
+  if [ -d "${filePath}/flycloud" ]; then
+    cd "${filePath}" || exit
+    echo -e "[INFO] 检测到当前已安装FlyCloud，即将下载更新文件"
+    mkdir -p tmp && cd tmp || exit
+    wget -O ${filePath}/flycloud/app.jar  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/app.jar >/dev/null 2>&1
+    # shellcheck disable=SC2181
+    if [ $? -ne 0 ]; then
+      echo -e "[Error] 下载文件失败，请检查网络或重新执行本脚本" && cd .. && rm -rf tmp && exit 2
+    fi
+    if [ ! -d "${filePath}/flycloud/statics" ]; then
+      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
+      cd flycloud || exit
+      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
+      if [ $? -ne 0 ]; then
+        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
+      fi
+      tar -zxvf statics.tar.gz && rm -rf statics.tar.gz
+      echo -e "[SUCCESS] 下载静态成功"
+    fi
+    cd .. && rm -rf tmp
+    cd ${filePath}/flycloud && docker restart flycloud
+    echo -e "[SUCCESS] 更新flycloud文件成功"
+  fi
+}
+
+check_update() {
+  new_version=$(curl -s "https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/new_version")
+
+  echo -e "[SUCCESS] 当前最新版本为：${new_version}"
+  if [ -d "${filePath}/flycloud" ]; then
+    cd ${filePath} || exit
+    old_version=$(curl -s "https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/old_version")
+    if version_gt "${new_version}" "${old_version}"; then
+      update_soft
+    fi
+  else
+    check_install
+  fi
+}
+
+version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
 
