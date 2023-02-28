@@ -34,11 +34,11 @@ check_redis(){
     if [ -n "$id" ]; then
       #docker rm -f $id
       echo -e "${yellow}检测到已安装redis镜像，跳过安装redis镜像过程${plain}"
-      docker restart redis
+      docker restart id
     elif [ -n "$id1" ]; then
       #docker rm -f $id1
       echo -e "${yellow}检测到已安装redis镜像，跳过安装redis镜像过程${plain}"
-      docker restart redis
+      docker restart id1
     else
       echo -e "${yellow}检测到还未安装redis镜像，本项目依赖redis数据库，是否安装redis镜像${plain}";
       echo "   1) 安装redis"
