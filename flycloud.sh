@@ -11,9 +11,8 @@ echo -e "\n   ${yellow}欢迎使用flycloud(飞云)一键脚本：${plain}"
 
 # 配置host
 echo -e "   ${yellow}flycloud安装与升级聚合脚本 ${plain}"
-echo "   1) 安装flycloud(自带安装redis容器)"
-echo "   2) 升级flycloud"
-echo "   3) 安装redis容器（额外脚本，非必选）"
+echo "   1) 安装|升级flycloud(自带安装redis容器)"
+echo "   2) 安装redis容器（额外脚本，非必选）"
 echo "   0) 退出"
 echo -ne "\n你的选择: "
 read input
@@ -39,27 +38,7 @@ case $input in
 		esac
 
     ;;
-    2)	echo -e "${yellow}正在拉取升级flycloud脚本${plain}";
-        echo -e "${yellow}下载脚本模式${plain}";
-		echo "   1) 国内模式，启用加速"
-		echo "   2) 国外模式，不加速"
-		echo -ne "\n你的选择："
-        read  is_speed_two
-		case $is_speed_two in
-			1) 	echo "国内模式下载安装脚本中。。。"
-				wget -O update_flycloud.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/update_jd_cookie.sh
-				chmod +x *sh
-				bash update_flycloud.sh
-			;;
-			2) 	echo "国外模式下载安装脚本中。。。"
-				wget -O update_flycloud.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/update_flycloud.sh
-				chmod +x *sh
-				bash update_flycloud.sh
-			;;
-		esac
-
-    ;;
-    3)	echo -e "${yellow}正在拉取安装redis脚本${plain}";
+    2)	echo -e "${yellow}正在拉取安装redis脚本${plain}";
         echo -e "${yellow}下载脚本模式${plain}";
 		echo "   1) 国内模式，启用加速"
 		echo "   2) 国外模式，不加速"
