@@ -147,11 +147,11 @@ id1=$(docker ps -a | grep "flycloud" | awk '{print $1}')
 if [ -n "$id" ]; then
   #docker rm -f $id
   #检测是否存在文件 && 下载更新文件
-  check_update
+  check_update()
 elif [ -n "$id1" ]; then
   #docker rm -f $id1
   #检测是否存在文件 && 下载更新文件
-  check_update
+  check_update()
 else
   # 先更新flycloud镜像
   docker pull yuanter/flycloud:latest
