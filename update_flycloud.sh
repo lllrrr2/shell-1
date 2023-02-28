@@ -96,10 +96,10 @@ docker pull yuanter/flycloud:latest
 
 #启动容器
 if  [ $num -eq 1 ];then
-	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud --link redis:redis yuanter/flycloud
+	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud --link redis:redis yuanter/flycloud /bin/bash -c "bash"
     echo -e "${yellow}使用--link redis:redis模式启动成功${plain}"
 else if [ $num -eq 2 ];then
-	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud yuanter/flycloud
+	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud yuanter/flycloud /bin/bash -c "bash"
     echo -e "${yellow}普通模式启动成功${plain}"
 	fi
 fi
