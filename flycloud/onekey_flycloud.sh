@@ -241,17 +241,8 @@ update_soft() {
       echo -e "[SUCCESS] 下载静态成功"
     fi
 
-    #判断redis是否启动了
-    redis_id=$(docker ps -a | grep "redis" | awk '{print $1}')
-    redis_id1=$(docker ps -a | grep "redis" | awk '{print $1}')
-    if [ -n "$redis_id" ]; then
-      #docker rm -f $redis_id
-      docker restart $redis_id
-    else if [ -n "$redis_id1" ]; then
-      #docker rm -f $redis_id1
-      docker restart $redis_id1
-      fi
-    fi
+    #检测是否安装启动了redis
+    check_redis
     #判断flycloud容器是否已经启动
     flycloud_id=$(docker ps | grep "flycloud" | awk '{print $1}')
     flycloud_id1=$(docker ps -a | grep "flycloud" | awk '{print $1}')
