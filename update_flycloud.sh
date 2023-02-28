@@ -63,7 +63,7 @@ check_update() {
   if [ -d "${filePath}/flycloud" ]; then
     cd ${filePath} || exit
     old_version=$(curl -s "https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/old_version")
-    if version_gt "$new_version" "$old_version"; then
+    if version_gt "${new_version}" "${old_version}"; then
       update_soft
     fi
   else
