@@ -239,6 +239,9 @@ else
   	fi
   fi
 
+fi
+
+
   #删除脚本
   if [ -f "$filePath/update_flycloud.sh" ]; then
   	rm -rf $filePath/update_flycloud.sh
@@ -248,6 +251,4 @@ else
   echo  -e "${green}升级成功${plain}"
   ip_url=$(curl -s ifconfig.me)
   echo  -e "${yellow}请网页打开本项目地址：http://$ip_url:1170${plain}"
-fi
-
 
