@@ -243,6 +243,7 @@ update_soft() {
 
     #检测是否安装启动了redis
     check_redis
+
     #判断flycloud容器是否已经启动
     flycloud_id=$(docker ps | grep "flycloud" | awk '{print $1}')
     flycloud_id1=$(docker ps -a | grep "flycloud" | awk '{print $1}')

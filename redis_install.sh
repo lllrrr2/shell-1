@@ -50,12 +50,12 @@ fi
 #删除脚本
 if [ -f "$filePath/redis_install.sh" ]; then
 	rm -rf $filePath/redis_install.sh
-	echo  -e "${yellow}删除当前脚本文件成功${plain}"
+	echo  -e "${green}删除当前脚本文件成功${plain}"
 fi
 
 
-echo -e "${green}redis启动成功${plain}"
-echo -e "${green}请牢记，redis端口（记得开放防火墙端口）为：${port}\n密码：$psw${plain}"
+echo -e "${yellow}redis启动成功${plain}"
+echo -e "${yellow}请牢记，redis端口（记得开放防火墙端口）为：${port}\n密码：$psw${plain}"
 echo -e "\n"
 
 
