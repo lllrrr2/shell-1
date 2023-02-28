@@ -206,12 +206,11 @@ check_install() {
 
 update_soft() {
   if [ -d "${filePath}/flycloud" ]; then
-    cd "${filePath}" || exit
+    cd "${filePath}/flycloud" || exit
     echo -e "[INFO] 检测到当前已安装FlyCloud，即将下载更新文件"
-    mkdir -p tmp && cd tmp || exit
     wget -O ${filePath}/flycloud/app.jar  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/app.jar >/dev/null 2>&1
     if [ $? -ne 0 ]; then
-      echo -e "[Error] 下载文件失败，请检查网络或重新执行本脚本" && cd .. && rm -rf tmp && exit 2
+      echo -e "[Error] 下载文件失败，请检查网络或重新执行本脚本"  && exit 2
     fi
     if [ ! -d "${filePath}/flycloud/statics" ]; then
       echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
@@ -223,7 +222,6 @@ update_soft() {
       tar -zxvf statics.tar.gz && rm -rf statics.tar.gz
       echo -e "[SUCCESS] 下载静态成功"
     fi
-    cd .. && rm -rf tmp
 
     #判断redis是否启动了
     redis_id=$(docker ps -a | grep "redis" | awk '{print $1}')
