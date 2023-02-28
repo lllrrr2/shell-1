@@ -263,8 +263,7 @@ update_soft() {
       #未启动时，需要启动
       start_docker
     fi
-
-    echo -e "[SUCCESS] 更新flycloud文件成功"
+    echo -e "[SUCCESS] 更新flycloud文件成功，程序正在启动中。。。"
   fi
 }
 
@@ -299,10 +298,10 @@ main() {
   #删除脚本
   if [ -f "$filePath/start_flycloud.sh" ]; then
   	rm -rf $filePath/start_flycloud.sh
-  	echo  -e "${yellow}删除当前脚本文件成功${plain}"
+  	echo  -e "${green}删除当前脚本文件成功${plain}"
   fi
 
-  echo  -e "${green}flycloud启动成功${plain}"
+  echo  -e "${yellow}flycloud启动成功${plain}"
   ip_url=$(curl -s ifconfig.me)
   echo  -e "${yellow}请网页打开本项目地址：http://$ip_url:1170${plain}"
 }
