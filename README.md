@@ -64,20 +64,13 @@ bash <(curl -s https://ghproxy.com/https://raw.githubusercontent.com/yuanter/she
 ```
 
 
-### redis+flycloud(飞云)安装/升级一键脚本
+### redis+flycloud(飞云)安装|升级一键脚本
 ```javascript
 wget -O flycloud.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud.sh;chmod +x *sh;bash flycloud.sh
 ```
 
-### flycloud(飞云)一键安装
+### flycloud(飞云)一键安装|升级一键脚本
 请注意，使用该脚本的前提是，application.yml配置文件在jd_cookie文件夹，同时redis和jd_cookie两个容器是在同时关联启动
 ```javascript
-wget -O start_flycloud.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/start_flycloud.sh;chmod +x *sh;bash start_flycloud.sh
+wget -O onekey_flycloud.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/onekey_flycloud.sh;chmod +x *sh;bash start_flycloud.sh
 ```
-
-### flycloud(飞云)一键升级
-请注意，使用该脚本的前提是，application.yml配置文件在jd_cookie文件夹，同时redis和jd_cookie两个容器是在同时关联启动
-```javascript
-wget -O update_flycloud.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/update_flycloud.sh;chmod +x *sh;bash update_flycloud.sh
-```
-
