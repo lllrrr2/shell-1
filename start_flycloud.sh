@@ -67,12 +67,12 @@ if [ ! -f "/root/flycloud/application.yml" ]; then
             read  is_speed_yml_file
             case $is_speed_yml_file in
                 1) 	echo "国内模式下载配置文件application.yml中。。。"
-                    wget -O $path/flycloud/application.yml  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/application.yml
+                    wget -O $path/flycloud/application.yml  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml
                     echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/flycloud${plain}"
                     path=$path/flycloud
                 ;;
                 2) 	echo "国外模式下载配置文件application.yml中。。。"
-                    wget -O $path/flycloud/application.yml  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/application.yml
+                    wget -O $path/flycloud/application.yml  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml
                     echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/flycloud${plain}"
                     path=$path/flycloud
                 ;;
@@ -89,7 +89,6 @@ fi
 #跳转至application.yml文件夹下
 cd $path
 echo -e "application.yml文件所在路径为：$path"
-
 
 # 替换脚本内容
 echo -e "\n   ${yellow}开始配置启动文件：${plain}"
