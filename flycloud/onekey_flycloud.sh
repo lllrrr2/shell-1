@@ -10,6 +10,21 @@ path=$PWD
 #当前文件路径
 filePath=$PWD
 
+#检测是否需要重启flycloud
+check_restart_flycloud(){
+    #判断flycloud容器是否已经启动
+    flycloud_id=$(docker ps | grep "flycloud" | awk '{print $1}')
+    flycloud_id1=$(docker ps -a | grep "flycloud" | awk '{print $1}')
+    if [ -n "$flycloud_id" ]; then
+      cd ${filePath}/flycloud && docker restart $flycloud_id
+    elif [ -n "$flycloud_id1" ]; then
+      cd ${filePath}/flycloud && docker restart $flycloud_id1
+    else
+      #未启动时，需要启动
+      start_flycloud
+    fi
+}
+
 
 #检测是否安装redis
 check_redis(){
@@ -54,7 +69,7 @@ check_redis(){
     fi
 }
 
-start_docker(){
+start_flycloud(){
         cd "${filePath}/flycloud" || exit
         # 更新镜像
         echo -e "\n${yellow}更新最新镜像中...${plain}"
@@ -190,7 +205,7 @@ check_yml(){
     fi
 
     #启动容器
-    start_docker
+    start_flycloud
 }
 
 
@@ -243,18 +258,8 @@ update_soft() {
 
     #检测是否安装启动了redis
     check_redis
-
-    #判断flycloud容器是否已经启动
-    flycloud_id=$(docker ps | grep "flycloud" | awk '{print $1}')
-    flycloud_id1=$(docker ps -a | grep "flycloud" | awk '{print $1}')
-    if [ -n "$flycloud_id" ]; then
-      cd ${filePath}/flycloud && docker restart $flycloud_id
-    elif [ -n "$flycloud_id1" ]; then
-      cd ${filePath}/flycloud && docker restart $flycloud_id1
-    else
-      #未启动时，需要启动
-      start_docker
-    fi
+    #启动flycloud
+    check_restart_flycloud
     echo -e "[SUCCESS] 更新flycloud文件成功，程序正在启动中。。。"
   fi
 }
@@ -273,7 +278,8 @@ check_update() {
     else
      #检测是否安装redis
      check_redis
-     cd ${filePath}/flycloud && docker restart flycloud
+     #启动flycloud
+     cd ${filePath}/flycloud && check_restart_flycloud
      echo  -e "${yellow}当前没有需要升级的版本${plain}"
     fi
   else
