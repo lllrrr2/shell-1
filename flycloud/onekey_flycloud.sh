@@ -29,16 +29,16 @@ check_restart_flycloud(){
 #检测是否安装redis
 check_redis(){
     #判断是否已安装redis镜像
-    id=$(docker ps | grep "redis" | awk '{print $1}')
-    id1=$(docker ps -a | grep "redis" | awk '{print $1}')
-    if [ -n "$id" ]; then
-      #docker rm -f $id
+    redis_id=$(docker ps | grep "redis" | awk '{print $1}')
+    redis_id1=$(docker ps -a | grep "redis" | awk '{print $1}')
+    if [ -n "$redis_id" ]; then
+      #docker rm -f $redis_id
       echo -e "${yellow}检测到已安装redis镜像，跳过安装redis镜像过程${plain}"
-      docker restart $id
-    elif [ -n "$id1" ]; then
-      #docker rm -f $id1
-      echo -e "${yellow}检测到已安装redis镜像，跳过安装redis镜像过程${plain}"
-      docker restart $id1
+      docker restart $redis_id
+    elif [ -n "$redis_id1" ]; then
+      #docker rm -f $redis_id1
+      echo -e "${green}检测到已安装redis镜像，跳过安装redis镜像过程${plain}"
+      docker restart $redis_id1
     else
       echo -e "${yellow}检测到还未安装redis镜像，本项目依赖redis数据库，是否安装redis镜像${plain}";
       echo "   1) 安装redis"
@@ -247,7 +247,6 @@ update_soft() {
     fi
     if [ ! -d "${filePath}/flycloud/statics" ]; then
       echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
-      cd ${filePath}/flycloud || exit
       wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
       if [ $? -ne 0 ]; then
         echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
