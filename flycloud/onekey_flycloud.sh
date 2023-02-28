@@ -308,6 +308,7 @@ main() {
 
   echo  -e "${yellow}flycloud启动成功${plain}"
   ip_url=$(curl -s ifconfig.me)
+  echo  -e "${yellow}查看日志请在控制台输入：docker logs -f --tail 100 flycloud${plain}"
   echo  -e "${yellow}请网页打开本项目地址：http://$ip_url:1170${plain}"
 }
 
