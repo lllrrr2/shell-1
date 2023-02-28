@@ -271,6 +271,8 @@ check_update() {
       #成功后下载version文件到本地
       wget -O ${filePath}/flycloud/version  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/version  >/dev/null 2>&1
     else
+     #检测是否安装redis
+     check_redis
      echo  -e "${yellow}当前没有需要升级的版本${plain}"
     fi
   else
