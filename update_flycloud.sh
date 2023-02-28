@@ -63,11 +63,11 @@ check_update() {
   if [ -d "${filePath}/flycloud" ]; then
     cd ${filePath} || exit
     old_version=$(curl -s "https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/old_version")
-    if version_gt "$new_version" "$old_version"; then
-      update_soft
+    if version_gt() "$new_version" "$old_version"; then
+      update_soft()
     fi
   else
-    check_install
+    check_install()
   fi
 }
 
@@ -220,11 +220,11 @@ id1=$(docker ps -a | grep "flycloud" | awk '{print $1}')
 if [ -n "$id" ]; then
   #docker rm -f $id
   #检测是否存在文件 && 下载更新文件
-  check_update
+  check_update()
 elif [ -n "$id1" ]; then
   #docker rm -f $id1
   #检测是否存在文件 && 下载更新文件
-  check_update
+  check_update()
 else
   # 先更新flycloud镜像
   docker pull yuanter/flycloud:latest
