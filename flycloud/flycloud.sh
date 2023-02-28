@@ -26,12 +26,12 @@ case $input in
         read  is_speed_one
 		case $is_speed_one in
 			1) 	echo "国内模式下载安装脚本中。。。"
-				wget -O start_flycloud.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/onekey_flycloud.sh
+				wget -O start_flycloud.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/onekey_flycloud.sh >/dev/null 2>&1
 				chmod +x *sh
 				bash start_flycloud.sh
 			;;
 			2) 	echo "国外模式下载安装脚本中。。。"
-				wget -O start_flycloud.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/flycloud/onekey_flycloud.sh
+				wget -O start_flycloud.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/flycloud/onekey_flycloud.sh >/dev/null 2>&1
 				chmod +x *sh
 				bash start_flycloud.sh
 			;;
@@ -46,12 +46,12 @@ case $input in
         read  is_speed_three
 		case $is_speed_three in
 			1) 	echo "国内模式下载安装脚本中。。。"
-				wget -O redis_install.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh
+				wget -O redis_install.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh >/dev/null 2>&1
 				chmod +x *sh
 				bash redis_install.sh
 			;;
 			2) 	echo "国外模式下载安装脚本中。。。"
-				wget -O redis_install.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh
+				wget -O redis_install.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh >/dev/null 2>&1
 				chmod +x *sh
 				bash redis_install.sh
 			;;

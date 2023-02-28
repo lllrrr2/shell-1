@@ -37,12 +37,12 @@ check_redis(){
                 read  is_speed_two
                 case $is_speed_two in
                     1) 	echo "国内模式下载安装脚本中。。。"
-                        wget -O redis_install.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh
+                        wget -O redis_install.sh  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh >/dev/null 2>&1
                         chmod +x *sh
                         bash redis_install.sh
                     ;;
                     2) 	echo "国外模式下载安装脚本中。。。"
-                        wget -O redis_install.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh;
+                        wget -O redis_install.sh  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh >/dev/null 2>&1
                         chmod +x *sh
                         bash redis_install.sh
                     ;;
@@ -68,12 +68,12 @@ check_yml(){
                 read  is_speed_yml_file
                 case $is_speed_yml_file in
                     1) 	echo "国内模式下载配置文件application.yml中。。。"
-                        wget -O $path/flycloud/application.yml  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml
+                        wget -O $path/flycloud/application.yml  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml >/dev/null 2>&1
                         echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/flycloud${plain}"
                         path=$path/flycloud
                     ;;
                     2) 	echo "国外模式下载配置文件application.yml中。。。"
-                        wget -O $path/flycloud/application.yml  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml
+                        wget -O $path/flycloud/application.yml  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml >/dev/null 2>&1
                         echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/flycloud${plain}"
                         path=$path/flycloud
                     ;;
@@ -116,11 +116,11 @@ check_yml(){
     	;;
     esac
     # 配置密码
-    echo -e "\n${yellow}设置redis的密码(默认为空): ${plain}"
+    echo -e "${yellow}设置redis的密码(默认为空): ${plain}"
     read -r -p "请输入启动redis时设置的密码，不带特殊字符：" password
     grep -rnl 'password:'  $path/application.yml | xargs sed -i -r "s/password:.*$/password: $password/g" >/dev/null 2>&1
     # 配置端口
-    echo -e "\n${yellow}设置redis的端口(回车默认6379，当使用--link模式启动时，请使用6379端口)${plain}"
+    echo -e "${yellow}设置redis的端口(回车默认6379，当使用--link模式启动时，请使用6379端口)${plain}"
     echo -e "${yellow}请输入端口(建议使用6379)：${plain}"
     read port
     if  [ ! -n "${port}" ] ;then
@@ -128,6 +128,16 @@ check_yml(){
     	echo -e "${yellow}未输入端口，使用默认端口6379${plain}"
     fi
     grep -rnl 'port: '  $path/application.yml | xargs sed -i -r "s/port: [^port: 1170].*$/port: $port/g" >/dev/null 2>&1
+
+    # 卡密
+    echo -e "${yellow}设置授权token: ${plain}"
+    read -r -p "请输入请输入您的授权码：" token
+    grep -rnl 'token:'  $path/application.yml | xargs sed -i -r "s/token:.*$/token: $token/g" >/dev/null 2>&1
+    # 授权地址
+    echo -e "${yellow}设置授权网址: ${plain}"
+    read -r -p "请输入请输入您的授权网址：" url
+    grep -rnl 'url:'  $path/application.yml | xargs sed -i -r "s/url:.*$/url: $url/g" >/dev/null 2>&1
+
 
     # 移除容器
     id=$(docker ps | grep "flycloud" | awk '{print $1}')
@@ -184,7 +194,7 @@ check_install() {
     if [ ! -d "${filePath}/flycloud/statics" ]; then
       echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
       mkdir -p flycloud && cd flycloud || exit
-      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
+      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz >/dev/null 2>&1
       if [ $? -ne 0 ]; then
         echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
       fi
@@ -215,7 +225,7 @@ update_soft() {
     if [ ! -d "${filePath}/flycloud/statics" ]; then
       echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
       cd ${filePath}/flycloud || exit
-      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
+      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz >/dev/null 2>&1
       if [ $? -ne 0 ]; then
         echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
       fi
