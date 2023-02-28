@@ -179,11 +179,12 @@ fi
 
 
 check_update() {
-  new_version=$(curl -s "https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/version")
+  new_version=$(curl -s "https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/new_version")
+
   echo -e "[SUCCESS] 当前最新版本为：${new_version}"
   if [ -d "${filePath}/flycloud" ]; then
     cd ${filePath} || exit
-    old_version=$(flycloud/elm -version)
+    old_version=$(curl -s "https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/old_version")
     if version_gt "$new_version" "$old_version"; then
       update_soft
     fi
