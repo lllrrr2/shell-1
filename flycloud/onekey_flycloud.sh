@@ -303,7 +303,7 @@ main() {
   #删除脚本
   if [ -f "$filePath/start_flycloud.sh" ]; then
   	rm -rf $filePath/start_flycloud.sh
-  	echo  -e "${green}删除当前脚本文件成功${plain}"
+  	echo  -e "${yellow}删除当前脚本文件成功${plain}"
   fi
 
   echo  -e "${yellow}flycloud启动成功${plain}"
