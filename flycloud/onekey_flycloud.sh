@@ -54,6 +54,44 @@ check_redis(){
     fi
 }
 
+start_docker(){
+        cd "${filePath}/flycloud" || exit
+        # 更新镜像
+        echo -e "\n${yellow}更新最新镜像中...${plain}"
+        docker pull yuanter/flycloud:latest
+
+        #使用模式
+        num=""
+        echo -e "\n${yellow}请输入数字选择启动脚本模式：${plain}"
+        echo "   1) 使用--link模式启动(redis容器和flycloud容器在同一主机，符合条件推荐使用该模式)"
+        echo "   2) 以普通模式启动"
+        echo "   0) 退出"
+        echo -ne "\n你的选择："
+        read param
+        num=$param
+        case $param in
+            0) echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
+            1) echo -e "${yellow}使用--link模式启动脚本${plain}"; echo -e "\n"
+               read -r -p "请确定使用该脚本的前提是redis是使用本脚本安装的容器且redis端口为6379，同时和flycloud容器在同一个主机? [y/n]: " link_input
+               case $link_input in
+                 [yY][eE][sS]|[yY]) ;;
+        		 [nN][oO]|[nN]) exit 1 ;;
+        		 esac
+        		;;
+            2) echo -e "${yellow}以普通模式启动脚本${plain}"; echo -e "\n";;
+        esac
+
+        #启动容器
+        if  [ $num -eq 1 ];then
+        	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud --link redis:redis yuanter/flycloud
+            echo -e "${yellow}使用--link模式启动成功${plain}"
+        else if [ $num -eq 2 ];then
+        	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud yuanter/flycloud
+            echo -e "${yellow}以普通模式启动成功${plain}"
+        	fi
+        fi
+}
+
 
 
 #判断是否已经下载application.yml
@@ -151,43 +189,8 @@ check_yml(){
       fi
     fi
 
-
-    # 更新镜像
-    echo -e "\n${yellow}更新最新镜像中...${plain}"
-    docker pull yuanter/flycloud:latest
-
-    #使用模式
-    num=""
-
-    echo -e "\n${yellow}请输入数字选择启动脚本模式：${plain}"
-    echo "   1) 使用--link模式启动(redis容器和flycloud容器在同一主机，符合条件推荐使用该模式)"
-    echo "   2) 以普通模式启动"
-    echo "   0) 退出"
-    echo -ne "\n你的选择："
-    read param
-    num=$param
-    case $param in
-        0) echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
-        1) echo -e "${yellow}使用--link模式启动脚本${plain}"; echo -e "\n"
-           read -r -p "请确定使用该脚本的前提是redis是使用本脚本安装的容器且redis端口为6379，同时和flycloud容器在同一个主机? [y/n]: " link_input
-           case $link_input in
-             [yY][eE][sS]|[yY]) ;;
-    		 [nN][oO]|[nN]) exit 1 ;;
-    		 esac
-    		;;
-        2) echo -e "${yellow}以普通模式启动脚本${plain}"; echo -e "\n";;
-    esac
-
     #启动容器
-    if  [ $num -eq 1 ];then
-    	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud --link redis:redis yuanter/flycloud
-        echo -e "${yellow}使用--link模式启动成功${plain}"
-    else if [ $num -eq 2 ];then
-    	docker run -d --privileged=true --restart=always  --name flycloud -p 1170:1170  -v $path:/root/flycloud yuanter/flycloud
-        echo -e "${yellow}以普通模式启动成功${plain}"
-    	fi
-    fi
-
+    start_docker
 }
 
 
@@ -249,8 +252,18 @@ update_soft() {
       docker restart $redis_id1
       fi
     fi
+    #判断flycloud容器是否已经启动
+    flycloud_id=$(docker ps | grep "flycloud" | awk '{print $1}')
+    flycloud_id1=$(docker ps -a | grep "flycloud" | awk '{print $1}')
+    if [ -n "$flycloud_id" ]; then
+      cd ${filePath}/flycloud && docker restart $flycloud_id
+    elif [ -n "$flycloud_id1" ]; then
+      cd ${filePath}/flycloud && docker restart $flycloud_id1
+    else
+      #未启动时，需要启动
+      start_docker
+    fi
 
-    cd ${filePath}/flycloud && docker restart flycloud
     echo -e "[SUCCESS] 更新flycloud文件成功"
   fi
 }
