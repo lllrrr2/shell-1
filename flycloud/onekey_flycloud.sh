@@ -210,6 +210,9 @@ check_install() {
          echo -e "[Error] 下载二进制文件失败，请检查网络或重新执行本脚本" && exit 2
        fi
     fi
+
+    #检测是否安装redis
+    check_redis
     #检测application.yml文件
     check_yml
 }
