@@ -198,7 +198,7 @@ check_install() {
       if [ $? -ne 0 ]; then
         echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
       fi
-      tar -zxvf statics.tar.gz && rm -rf statics.tar.gz
+      tar -zxvf statics.tar.gz  >/dev/null 2>&1 && rm -rf statics.tar.gz
       echo -e "[SUCCESS] statics下载静态成功"
     fi
     #检测app.jar
