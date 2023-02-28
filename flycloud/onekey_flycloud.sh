@@ -273,6 +273,7 @@ check_update() {
     else
      #检测是否安装redis
      check_redis
+     cd ${filePath}/flycloud && docker restart flycloud
      echo  -e "${yellow}当前没有需要升级的版本${plain}"
     fi
   else
