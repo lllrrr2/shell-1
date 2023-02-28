@@ -220,9 +220,6 @@ check_install() {
     check_redis
     #检测application.yml文件
     check_yml
-
-    #成功后下载version文件到本地
-    wget -O ${filePath}/flycloud/version  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/version
 }
 
 update_soft() {
@@ -294,6 +291,10 @@ version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; 
 main() {
   #检测是否存在文件 && 下载更新文件
   check_update
+
+  #成功后下载version文件到本地
+  wget -O ${filePath}/flycloud/version  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/version  >/dev/null 2>&1
+
 
   #删除脚本
   if [ -f "$filePath/start_flycloud.sh" ]; then
