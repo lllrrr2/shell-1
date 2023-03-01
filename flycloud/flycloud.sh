@@ -127,38 +127,28 @@ start_flycloud(){
 check_yml(){
     echo -e "${yellow}检测application.yml配置文件中...${plain}\n"
     if [ ! -f "${filePath}/flycloud/application.yml" ]; then
-    	if [ ! -f "$path/application.yml" ]; then
-    		if [ ! -f "$path/flycloud/application.yml" ]; then
-    			echo -e "${yellow}检测到application.yml配置文件不存在，开始下载一份示例文件用于初始化...${plain}\n"
-    			echo -e "${yellow}下载配置文件application.yml模式${plain}";
-                echo "   1) 国内模式，启用加速下载"
-                echo "   2) 国外模式，不加速"
-                echo -ne "\n你的选择："
-                read  is_speed_yml_file
-                case $is_speed_yml_file in
-                    1) 	echo "国内模式下载配置文件application.yml中。。。"
-                        wget -O $path/flycloud/application.yml  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml >/dev/null 2>&1
-                        echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/flycloud${plain}"
-                        path=$path/flycloud
-                    ;;
-                    2) 	echo "国外模式下载配置文件application.yml中。。。"
-                        wget -O $path/flycloud/application.yml  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml >/dev/null 2>&1
-                        echo -e "${yellow}当前新下载的application.yml文件所在路径为：$path/flycloud${plain}"
-                        path=$path/flycloud
-                    ;;
-                esac
-
-    		else
-    			path=$path/flycloud
-    		fi
-    	fi
-    else
-    	path="/root/flycloud";
+        echo -e "${yellow}检测到application.yml配置文件不存在，开始下载一份示例文件用于初始化...${plain}\n"
+        echo -e "${yellow}下载配置文件application.yml模式${plain}";
+        echo "   1) 国内模式，启用加速下载"
+        echo "   2) 国外模式，不加速"
+        echo -ne "\n你的选择："
+        read  is_speed_yml_file
+        case $is_speed_yml_file in
+            1) 	echo "国内模式下载配置文件application.yml中。。。"
+                wget -O $filePath/flycloud/application.yml  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml >/dev/null 2>&1
+                echo -e "${yellow}当前新下载的application.yml文件所在路径为：$filePath/flycloud${plain}"
+            ;;
+            2) 	echo "国外模式下载配置文件application.yml中。。。"
+                wget -O $filePath/flycloud/application.yml  --no-check-certificate https://raw.githubusercontent.com/yuanter/shell/main/flycloud/application.yml >/dev/null 2>&1
+                echo -e "${yellow}当前新下载的application.yml文件所在路径为：$filePath/flycloud${plain}"
+            ;;
+        esac
     fi
 
     #跳转至application.yml文件夹下
-    cd $path
-    echo -e "application.yml文件所在路径为：$path"
+    cd $filePath/flycloud
+    echo -e "application.yml文件所在路径为：$filePath/flycloud"
+
 
     # 替换脚本内容
     echo -e "\n   ${yellow}开始配置启动文件：${plain}"
@@ -172,7 +162,7 @@ check_yml(){
     case $host in
         0)	echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
         1)	echo -e "${yellow}host使用默认redis${plain}";
-    		grep -rnl 'host:'  $path/application.yml | xargs sed -i -r "s/host:.*$/host: redis/g" >/dev/null 2>&1
+    		grep -rnl 'host:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/host:.*$/host: redis/g" >/dev/null 2>&1
     		echo -e "\n";;
         2)	echo -e "${yellow}host使用ip或者域名（当使用公网时，请放行redis使用的公网端口）${plain}"; echo -e "\n"
     		read -r -p "请输入ip或者域名：" url
@@ -181,13 +171,13 @@ check_yml(){
     			echo -e "${red}未输入ip地址，退出程序${plain}"
     			exit 1
     		fi
-    		grep -rnl 'host:'  $path/application.yml | xargs sed -i -r "s/host:.*$/host: $url/g" >/dev/null 2>&1
+    		grep -rnl 'host:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/host:.*$/host: $url/g" >/dev/null 2>&1
     	;;
     esac
     # 配置密码
     echo -e "${yellow}设置redis的密码(默认为空): ${plain}"
     read -r -p "请输入启动redis时设置的密码，不带特殊字符：" password
-    grep -rnl 'password:'  $path/application.yml | xargs sed -i -r "s/password:.*$/password: $password/g" >/dev/null 2>&1
+    grep -rnl 'password:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/password:.*$/password: $password/g" >/dev/null 2>&1
     # 配置端口
     echo -e "${yellow}设置redis的端口(回车默认6379，当使用--link模式启动时，请使用6379端口)${plain}"
     echo -e "${yellow}请输入端口(建议使用6379)：${plain}"
@@ -196,16 +186,16 @@ check_yml(){
     	port=6379;
     	echo -e "${yellow}未输入端口，使用默认端口6379${plain}"
     fi
-    grep -rnl 'port: '  $path/application.yml | xargs sed -i -r "s/port: [^port: 1170].*$/port: $port/g" >/dev/null 2>&1
+    grep -rnl 'port: '  $filePath/flycloud/application.yml | xargs sed -i -r "s/port: [^port: 1170].*$/port: $port/g" >/dev/null 2>&1
 
     # 卡密
     echo -e "${yellow}设置授权token: ${plain}"
     read -r -p "请输入请输入您的授权码：" token
-    grep -rnl 'token:'  $path/application.yml | xargs sed -i -r "s/token:.*$/token: $token/g" >/dev/null 2>&1
+    grep -rnl 'token:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/token:.*$/token: $token/g" >/dev/null 2>&1
     # 授权地址
     echo -e "${yellow}设置授权网址: ${plain}"
     read -r -p "请输入请输入您的授权网址：" url
-    grep -rnl 'url:'  $path/application.yml | xargs sed -i -r "s/url:.*$/url: $url/g" >/dev/null 2>&1
+    grep -rnl 'url:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/url:.*$/url: $url/g" >/dev/null 2>&1
 
 
     # 移除容器
