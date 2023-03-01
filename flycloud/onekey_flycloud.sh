@@ -268,6 +268,10 @@ check_update() {
   echo -e "[SUCCESS] 当前最新版本为：${new_version}"
   if [ -d "${filePath}/flycloud" ]; then
     cd ${filePath}/flycloud || exit
+    if [ ! -f ${filePath}/version]; then
+        touch ${filePath}/version
+        echo "19700101" >> ${filePath}/version
+    fi
     old_version=$(cat version)
     if version_gt "${new_version}" "${old_version}"; then
       #检测更新
@@ -285,7 +289,6 @@ check_update() {
     check_install
     #成功后下载version文件到本地
     wget -O ${filePath}/flycloud/version  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/version  >/dev/null 2>&1
-
   fi
 }
 
