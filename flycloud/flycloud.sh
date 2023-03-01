@@ -266,7 +266,7 @@ check_update() {
   echo -e "[SUCCESS] 当前最新版本为：${new_version}"
   if [ -d "${filePath}/flycloud" ]; then
     cd ${filePath}/flycloud || exit
-    if [ ! -f ${filePath}/version]; then
+    if [ ! -f ${filePath}/version ]; then
         touch ${filePath}/version
         echo "19700101" >> ${filePath}/version
     fi
