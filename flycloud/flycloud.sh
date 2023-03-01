@@ -25,6 +25,19 @@ check_restart_flycloud(){
     fi
 }
 
+#检测是否已下载静态文件statics
+check_statics(){
+    if [ ! -d "${filePath}/flycloud/statics" ]; then
+      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
+      mkdir -p flycloud && cd flycloud || exit
+      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
+      if [ $? -ne 0 ]; then
+        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
+      fi
+      tar -zxvf statics.tar.gz  >/dev/null 2>&1 && rm -rf statics.tar.gz
+      echo -e "[SUCCESS] statics下载静态成功"
+    fi
+}
 
 #检测是否安装redis
 check_redis(){
@@ -211,16 +224,7 @@ check_yml(){
 
 check_install() {
     #检测静态文件
-    if [ ! -d "${filePath}/flycloud/statics" ]; then
-      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
-      mkdir -p flycloud && cd flycloud || exit
-      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
-      if [ $? -ne 0 ]; then
-        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
-      fi
-      tar -zxvf statics.tar.gz  >/dev/null 2>&1 && rm -rf statics.tar.gz
-      echo -e "[SUCCESS] statics下载静态成功"
-    fi
+    check_statics
     #检测app.jar
     if [ ! -f "${filePath}/flycloud/app.jar" ]; then
        echo -e "[INFO] 检测到当前不存在jar文件，即将下载文件"
@@ -245,15 +249,8 @@ update_soft() {
     if [ $? -ne 0 ]; then
       echo -e "[Error] 下载文件失败，请检查网络或重新执行本脚本"  && exit 2
     fi
-    if [ ! -d "${filePath}/flycloud/statics" ]; then
-      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
-      wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
-      if [ $? -ne 0 ]; then
-        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
-      fi
-      tar -zxvf statics.tar.gz >/dev/null 2>&1 && rm -rf statics.tar.gz
-      echo -e "[SUCCESS] 下载静态成功"
-    fi
+    #检测静态文件
+    check_statics
 
     #检测是否安装启动了redis
     check_redis
@@ -279,6 +276,8 @@ check_update() {
       #成功后下载version文件到本地
       wget -O ${filePath}/flycloud/version  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/version  >/dev/null 2>&1
     else
+     #检测静态文件
+     check_statics
      #检测是否安装redis
      check_redis
      #启动flycloud

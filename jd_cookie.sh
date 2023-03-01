@@ -25,6 +25,19 @@ check_restart_jd_cookie(){
     fi
 }
 
+#检测是否已下载静态文件statics
+check_statics(){
+    if [ ! -d "${filePath}/jd_cookie/statics" ]; then
+      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
+      mkdir -p jd_cookie && cd jd_cookie || exit
+      wget -O ${filePath}/jd_cookie/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie/statics.tar.gz
+      if [ $? -ne 0 ]; then
+        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
+      fi
+      tar -zxvf statics.tar.gz  >/dev/null 2>&1 && rm -rf statics.tar.gz
+      echo -e "[SUCCESS] statics下载静态成功"
+    fi
+}
 
 #检测是否安装redis
 check_redis(){
@@ -202,16 +215,8 @@ check_yml(){
 
 check_install() {
     #检测静态文件
-    if [ ! -d "${filePath}/jd_cookie/statics" ]; then
-      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
-      mkdir -p jd_cookie && cd jd_cookie || exit
-      wget -O ${filePath}/jd_cookie/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie/statics.tar.gz
-      if [ $? -ne 0 ]; then
-        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
-      fi
-      tar -zxvf statics.tar.gz  >/dev/null 2>&1 && rm -rf statics.tar.gz
-      echo -e "[SUCCESS] statics下载静态成功"
-    fi
+    check_statics
+
     #检测app.jar
     if [ ! -f "${filePath}/jd_cookie/app.jar" ]; then
        echo -e "[INFO] 检测到当前不存在jar文件，即将下载文件"
@@ -236,15 +241,8 @@ update_soft() {
     if [ $? -ne 0 ]; then
       echo -e "[Error] 下载文件失败，请检查网络或重新执行本脚本"  && exit 2
     fi
-    if [ ! -d "${filePath}/jd_cookie/statics" ]; then
-      echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
-      wget -O ${filePath}/jd_cookie/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie/statics.tar.gz
-      if [ $? -ne 0 ]; then
-        echo -e "[Error] 下载静态文件失败，请检查网络或重新执行本脚本" && exit 2
-      fi
-      tar -zxvf statics.tar.gz >/dev/null 2>&1 && rm -rf statics.tar.gz
-      echo -e "[SUCCESS] 下载静态成功"
-    fi
+
+    check_statics
 
     #检测是否安装启动了redis
     check_redis
@@ -270,6 +268,8 @@ check_update() {
       #成功后下载version文件到本地
       wget -O ${filePath}/jd_cookie/version  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie/version  >/dev/null 2>&1
     else
+     #检测是否已经下载静态文件
+     check_statics
      #检测是否安装redis
      check_redis
      #启动jd_cookie
