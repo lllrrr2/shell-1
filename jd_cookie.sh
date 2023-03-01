@@ -29,6 +29,7 @@ check_restart_jd_cookie(){
 check_statics(){
     if [ ! -d "${filePath}/jd_cookie/statics" ]; then
       echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
+      cd ${filePath}
       mkdir -p jd_cookie && cd jd_cookie || exit
       wget -O ${filePath}/jd_cookie/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie/statics.tar.gz
       if [ $? -ne 0 ]; then

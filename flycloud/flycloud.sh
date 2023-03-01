@@ -28,6 +28,7 @@ check_restart_flycloud(){
 #检测是否已下载静态文件statics
 check_statics(){
     if [ ! -d "${filePath}/flycloud/statics" ]; then
+      cd ${filePath}
       echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
       mkdir -p flycloud && cd flycloud || exit
       wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
