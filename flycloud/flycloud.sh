@@ -242,7 +242,8 @@ update_soft() {
     fi
     #检测静态文件
     check_statics
-
+    #检测是否已经有配置文件
+    check_yml
     #检测是否安装启动了redis
     check_redis
     #启动flycloud
