@@ -29,13 +29,18 @@ wget -O install.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter
 wget -O redis_install.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/redis_install.sh;chmod +x *sh;bash redis_install.sh
 ```
 
+### 旧版jd_cookie安装|升级一键脚本
+```javascript
+wget -O jd_cookie.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie/jd_cookie.sh;chmod +x *sh;bash jd_cookie.sh
+```
+
 
 ### jd_cookie配置文件下载地址
 ```javascript
 wget -O application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie/application.yml
 ```
 
-### jd_cookie安装|升级一键脚本
+### 新版jd_cookie安装|升级一键脚本
 ```javascript
 wget -O jd_cookie.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie.sh;chmod +x *sh;bash jd_cookie.sh
 ```
