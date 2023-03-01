@@ -35,7 +35,7 @@ wget -O redis_install.sh https://ghproxy.com/https://raw.githubusercontent.com/y
 wget -O application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie/application.yml
 ```
 
-### redis+jd_cookie安装/升级一键脚本
+### jd_cookie安装|升级一键脚本
 ```javascript
 wget -O jd_cookie.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie.sh;chmod +x *sh;bash jd_cookie.sh
 ```
