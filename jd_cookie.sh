@@ -220,8 +220,10 @@ update_soft() {
       echo -e "[Error] 下载文件失败，请检查网络或重新执行本脚本"  && exit 2
     fi
 
+    #检测是否有静态文件
     check_statics
-
+    #检测是否已经有配置文件
+    check_yml
     #检测是否安装启动了redis
     check_redis
     #启动jd_cookie
