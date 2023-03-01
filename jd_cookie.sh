@@ -224,7 +224,7 @@ check_install() {
        cd ${filePath}/jd_cookie || exit
        wget -O ${filePath}/jd_cookie/app.jar  --no-check-certificate https://ghproxy.com/https://github.com/yuanter/shell/raw/main/jd_cookie/app.jar
        if [ $? -ne 0 ]; then
-         echo -e "[Error] 下载二进制文件失败，请检查网络或重新执行本脚本" && exit 2
+         echo -e "[Error] 下载app.jar文件失败，请检查网络或重新执行本脚本" && exit 2
        fi
     fi
 
