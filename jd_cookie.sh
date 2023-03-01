@@ -10,19 +10,19 @@ path=$PWD
 #当前文件路径
 filePath=$PWD
 
-#检测是否需要重启jd_cookie
+#检测是否需要重启jd_cookie容器
 check_restart_jd_cookie(){
-    #判断jd_cookie容器是否已经启动
+    # 移除容器
     jd_cookie_id=$(docker ps | grep "jd_cookie" | awk '{print $1}')
     jd_cookie_id1=$(docker ps -a | grep "jd_cookie" | awk '{print $1}')
     if [ -n "$jd_cookie_id" ]; then
-      cd ${filePath}/jd_cookie && docker restart $jd_cookie_id
-    elif [ -n "$jd_cookie_id1" ]; then
-      cd ${filePath}/jd_cookie && docker restart $jd_cookie_id1
-    else
-      #未启动时，需要启动
-      start_jd_cookie
+      docker rm -f $jd_cookie_id
+    else if [ -n "$jd_cookie_id1" ]; then
+      docker rm -f $jd_cookie_id1
+      fi
     fi
+    #未启动时，需要启动
+    start_jd_cookie
 }
 
 #检测是否已下载静态文件statics
@@ -197,20 +197,6 @@ check_yml(){
     	echo -e "${yellow}未输入端口，使用默认端口6379${plain}"
     fi
     grep -rnl 'port: '  $path/application.yml | xargs sed -i -r "s/port: [^port: 1170].*$/port: $port/g" >/dev/null 2>&1
-
-
-    # 移除容器
-    id=$(docker ps | grep "jd_cookie" | awk '{print $1}')
-    id1=$(docker ps -a | grep "jd_cookie" | awk '{print $1}')
-    if [ -n "$id" ]; then
-      docker rm -f $id
-    else if [ -n "$id1" ]; then
-      docker rm -f $id1
-      fi
-    fi
-
-    #启动容器
-    start_jd_cookie
 }
 
 
@@ -232,6 +218,8 @@ check_install() {
     check_redis
     #检测application.yml文件
     check_yml
+    #启动容器
+    check_restart_jd_cookie
 }
 
 update_soft() {
@@ -299,8 +287,8 @@ main() {
   check_update
 
   #删除脚本
-  if [ -f "$filePath/start_jd_cookie.sh" ]; then
-  	rm -rf $filePath/start_jd_cookie.sh
+  if [ -f "$filePath/jd_cookie.sh" ]; then
+  	rm -rf $filePath/jd_cookie.sh
   	echo  -e "${yellow}删除当前脚本文件成功${plain}"
   fi
 
