@@ -112,10 +112,10 @@ start_jd_cookie(){
 
         #启动容器
         if  [ $num -eq 1 ];then
-        	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v ${filePath}/jd_cookie:/root/jd_cookie --link redis:redis yuanter/jd_cookie
+        	docker run -d --privileged=true --restart=always  --name jd_cookie --ulimit core=0 -p 1170:1170  -v ${filePath}/jd_cookie:/root/jd_cookie --link redis:redis yuanter/jd_cookie
             echo -e "${yellow}使用--link模式启动成功${plain}"
         else if [ $num -eq 2 ];then
-        	docker run -d --privileged=true --restart=always  --name jd_cookie -p 1170:1170  -v ${filePath}/jd_cookie:/root/jd_cookie yuanter/jd_cookie
+        	docker run -d --privileged=true --restart=always  --name jd_cookie --ulimit core=0 -p 1170:1170  -v ${filePath}/jd_cookie:/root/jd_cookie yuanter/jd_cookie
             echo -e "${yellow}以普通模式启动成功${plain}"
         	fi
         fi
