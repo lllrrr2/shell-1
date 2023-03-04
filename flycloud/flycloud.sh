@@ -112,10 +112,10 @@ start_flycloud(){
 
         #启动容器
         if  [ $num -eq 1 ];then
-        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170  -v ${filePath}/flycloud:/root/flycloud --link redis:redis yuanter/flycloud tail -f /dev/null
+        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170  -v ${filePath}/flycloud:/root/flycloud --link redis:redis yuanter/flycloud
             echo -e "${yellow}使用--link模式启动成功${plain}"
         else if [ $num -eq 2 ];then
-        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170  -v ${filePath}/flycloud:/root/flycloud yuanter/flycloud tail -f /dev/null
+        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170  -v ${filePath}/flycloud:/root/flycloud yuanter/flycloud
             echo -e "${yellow}以普通模式启动成功${plain}"
         	fi
         fi
