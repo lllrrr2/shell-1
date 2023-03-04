@@ -66,7 +66,7 @@ bash <(curl -s https://ghproxy.com/https://raw.githubusercontent.com/yuanter/she
 ```
 
 
-### redis+flycloud(飞云)安装|升级一键脚本
+### flycloud(飞云)安装|升级一键脚本
 ```javascript
 wget -O flycloud.sh https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/flycloud.sh;chmod +x *sh;bash flycloud.sh
 ```
