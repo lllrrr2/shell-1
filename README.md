@@ -35,7 +35,7 @@ wget -O jd_cookie.sh https://ghproxy.com/https://raw.githubusercontent.com/yuant
 ```
 
 
-### jd_cookie配置文件下载地址
+### jd_cookie配置application.yml文件下载地址
 ```javascript
 wget -O application.yml https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/jd_cookie/application.yml
 ```
