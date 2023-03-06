@@ -31,7 +31,12 @@ echo -e "${yellow}请输入redis密码(不要设置简单且带特殊字符密�
 read  psw
 if  [ ! -n "${psw}" ] ;then
     psw="";
-    echo -e "${yellow}redis未使用密码${plain}\n"
+    echo -e "${yellow}叼毛，redis一定要设置密码,再给你一次机会，重新输入密码${plain}\n"
+    read  psw
+    if  [ ! -n "${psw}" ] ;then
+        psw = (</dev/urandom tr -dc '1234567890qwertQWERTasdfgASDFGzxcvbZXCVB' | head -c16)
+        echo -e "你个叼毛，都说让你重新输密码了。现在系统自动给你生成了一个新密码，记好了，密码是$psw"
+    fi
 fi
 
 echo -e "${yellow}请输入redis的端口(默认6379)：${plain}";
