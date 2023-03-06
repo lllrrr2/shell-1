@@ -34,7 +34,7 @@ if  [ ! -n "${psw}" ] ;then
     read  psw
     if  [ ! -n "${psw}" ] ;then
         psw=$(</dev/urandom tr -dc '1234567890qwertQWERTasdfgASDFGzxcvbZXCVB' | head -c16)
-        echo -e "你个叼毛，都说让你重新输密码了。现在系统自动给你生成了一个新密码，记好了，密码是$psw"
+        echo -e "你个叼毛，都说让你重新输密码了。现在系统自动给你生成了一个新密码，记好了，密码是{yellow}$psw${plain}"
     fi
 fi
 
