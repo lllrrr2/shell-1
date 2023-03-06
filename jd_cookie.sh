@@ -222,10 +222,10 @@ update_soft() {
 
     #检测是否有静态文件
     check_statics
-    #检测是否已经有配置文件
-    check_yml
     #检测是否安装启动了redis
     check_redis
+    #检测是否已经有配置文件
+    check_yml
     #启动jd_cookie
     check_restart_jd_cookie
     echo -e "[SUCCESS] 更新jd_cookie文件成功，程序正在启动中。。。"
