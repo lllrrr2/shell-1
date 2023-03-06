@@ -143,60 +143,60 @@ check_yml(){
                 echo -e "${yellow}当前新下载的application.yml文件所在路径为：$filePath/flycloud${plain}"
             ;;
         esac
+
+
+        #跳转至application.yml文件夹下
+        cd $filePath/flycloud
+        echo -e "application.yml文件所在路径为：$filePath/flycloud"
+
+
+        # 替换脚本内容
+        echo -e "\n   ${yellow}开始配置启动文件：${plain}"
+        # 配置host
+        echo -e "   ${yellow}设置redis的连接地址host: ${plain}"
+        echo "   1) host使用默认redis"
+        echo "   2) host使用ip或者域名（当使用公网时，请放行redis使用的公网端口）"
+        echo "   0) 退出"
+        echo -ne "\n你的选择: "
+        read host
+        case $host in
+            0)	echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
+            1)	echo -e "${yellow}host使用默认redis${plain}";
+                grep -rnl 'host:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/host:.*$/host: redis/g" >/dev/null 2>&1
+                echo -e "\n";;
+            2)	echo -e "${yellow}host使用ip或者域名（当使用公网时，请放行redis使用的公网端口）${plain}"; echo -e "\n"
+                read -r -p "请输入ip或者域名：" url
+                if  [ ! -n "${url}" ] ;then
+                    #url=$(curl -s ifconfig.me)
+                    echo -e "${red}未输入ip地址，退出程序${plain}"
+                    exit 1
+                fi
+                grep -rnl 'host:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/host:.*$/host: $url/g" >/dev/null 2>&1
+            ;;
+        esac
+        # 配置密码
+        echo -e "${yellow}设置redis的密码(默认为空): ${plain}"
+        read -r -p "请输入启动redis时设置的密码，不带特殊字符：" password
+        grep -rnl 'password:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/password:.*$/password: $password/g" >/dev/null 2>&1
+        # 配置端口
+        echo -e "${yellow}设置redis的端口(回车默认6379，当使用--link模式启动时，请使用6379端口)${plain}"
+        echo -e "${yellow}请输入端口(建议使用6379)：${plain}"
+        read port
+        if  [ ! -n "${port}" ] ;then
+            port=6379;
+            echo -e "${yellow}未输入端口，使用默认端口6379${plain}"
+        fi
+        grep -rnl 'port: '  $filePath/flycloud/application.yml | xargs sed -i -r "s/port: [^port: 1170].*$/port: $port/g" >/dev/null 2>&1
+
+        # 卡密
+        echo -e "${yellow}设置授权token: ${plain}"
+        read -r -p "请输入请输入您的授权码：" token
+        grep -rnl 'token:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/token:.*$/token: $token/g" >/dev/null 2>&1
+        # 授权地址
+        echo -e "${yellow}设置授权网址: ${plain}"
+        read -r -p "请输入请输入您的授权网址：" url
+        grep -rnl 'url:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/url:.*$/url: $url/g" >/dev/null 2>&1
     fi
-
-    #跳转至application.yml文件夹下
-    cd $filePath/flycloud
-    echo -e "application.yml文件所在路径为：$filePath/flycloud"
-
-
-    # 替换脚本内容
-    echo -e "\n   ${yellow}开始配置启动文件：${plain}"
-    # 配置host
-    echo -e "   ${yellow}设置redis的连接地址host: ${plain}"
-    echo "   1) host使用默认redis"
-    echo "   2) host使用ip或者域名（当使用公网时，请放行redis使用的公网端口）"
-    echo "   0) 退出"
-    echo -ne "\n你的选择: "
-    read host
-    case $host in
-        0)	echo -e "${yellow}退出脚本程序${plain}";exit 1 ;;
-        1)	echo -e "${yellow}host使用默认redis${plain}";
-    		grep -rnl 'host:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/host:.*$/host: redis/g" >/dev/null 2>&1
-    		echo -e "\n";;
-        2)	echo -e "${yellow}host使用ip或者域名（当使用公网时，请放行redis使用的公网端口）${plain}"; echo -e "\n"
-    		read -r -p "请输入ip或者域名：" url
-    		if  [ ! -n "${url}" ] ;then
-    			#url=$(curl -s ifconfig.me)
-    			echo -e "${red}未输入ip地址，退出程序${plain}"
-    			exit 1
-    		fi
-    		grep -rnl 'host:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/host:.*$/host: $url/g" >/dev/null 2>&1
-    	;;
-    esac
-    # 配置密码
-    echo -e "${yellow}设置redis的密码(默认为空): ${plain}"
-    read -r -p "请输入启动redis时设置的密码，不带特殊字符：" password
-    grep -rnl 'password:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/password:.*$/password: $password/g" >/dev/null 2>&1
-    # 配置端口
-    echo -e "${yellow}设置redis的端口(回车默认6379，当使用--link模式启动时，请使用6379端口)${plain}"
-    echo -e "${yellow}请输入端口(建议使用6379)：${plain}"
-    read port
-    if  [ ! -n "${port}" ] ;then
-    	port=6379;
-    	echo -e "${yellow}未输入端口，使用默认端口6379${plain}"
-    fi
-    grep -rnl 'port: '  $filePath/flycloud/application.yml | xargs sed -i -r "s/port: [^port: 1170].*$/port: $port/g" >/dev/null 2>&1
-
-    # 卡密
-    echo -e "${yellow}设置授权token: ${plain}"
-    read -r -p "请输入请输入您的授权码：" token
-    grep -rnl 'token:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/token:.*$/token: $token/g" >/dev/null 2>&1
-    # 授权地址
-    echo -e "${yellow}设置授权网址: ${plain}"
-    read -r -p "请输入请输入您的授权网址：" url
-    grep -rnl 'url:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/url:.*$/url: $url/g" >/dev/null 2>&1
-
 
     # 移除容器
     id=$(docker ps | grep "flycloud" | awk '{print $1}')
