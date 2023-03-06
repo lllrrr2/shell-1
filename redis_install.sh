@@ -30,7 +30,6 @@ docker pull redis
 echo -e "${yellow}请输入redis密码(不要设置简单且带特殊字符密码)：${plain}";
 read  psw
 if  [ ! -n "${psw}" ] ;then
-    psw="";
     echo -e "${yellow}叼毛，redis一定要设置密码,再给你一次机会，重新输入密码${plain}\n"
     read  psw
     if  [ ! -n "${psw}" ] ;then
