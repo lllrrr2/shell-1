@@ -33,7 +33,7 @@ if  [ ! -n "${psw}" ] ;then
     echo -e "${yellow}叼毛，redis一定要设置密码,再给你一次机会，重新输入密码${plain}\n"
     read  psw
     if  [ ! -n "${psw}" ] ;then
-        psw = (</dev/urandom tr -dc '1234567890qwertQWERTasdfgASDFGzxcvbZXCVB' | head -c16)
+        psw=(</dev/urandom tr -dc '1234567890qwertQWERTasdfgASDFGzxcvbZXCVB' | head -c16)
         echo -e "你个叼毛，都说让你重新输密码了。现在系统自动给你生成了一个新密码，记好了，密码是$psw"
     fi
 fi
