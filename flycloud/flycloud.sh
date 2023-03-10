@@ -12,15 +12,15 @@ filePath=$PWD
 
 dmidecode="/usr/sbin/dmidecode"
 #判断/usr/sbin/dmidecode或者/sbin/dmidecode
-if [ ! -d "/usr/sbin/dmidecode" ]; then
-    if  [ ! -d "/sbin/dmidecode" ]; then
+if [ ! -f "/usr/sbin/dmidecode" ]; then
+    if  [ ! -f "/sbin/dmidecode" ]; then
         echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
         exit 1
     fi
     dmidecode="/sbin/dmidecode"
 fi
 #判断/dev/mem
-if [ ! -d "/dev/mem" ]; then
+if [ ! -f "/dev/mem" ]; then
     echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
     exit 1
 fi
