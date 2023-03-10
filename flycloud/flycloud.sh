@@ -10,41 +10,33 @@ path=$PWD
 #当前文件路径
 filePath=$PWD
 
-check_system() {
-  arch=$(arch)
-  if [[ $arch == "amd64" || $arch == "x86_64" || $arch == "x64" ]]; then
-    arch="amd64"
-  elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
-    arch="arm64"
-  elif [[ $arch == "x86" || $arch == "i386" ]]; then
-    arch="386"
-  elif [[ $arch == "arm" || $arch == "armv7l" || $arch == "armv8l" ]]; then
-    arch="arm"
-  else
-    echo -e "[Error] 检测架构失败，请尝试切换设备或联系作者"
-    exit 2
-  fi
-  echo -e "[INFO] 架构: ${arch}"
-}
-
-check_system
-
-
-dmidecode="/usr/sbin/dmidecode"
-#判断/usr/sbin/dmidecode或者/sbin/dmidecode
-if [ ! -d "/usr/sbin/dmidecode" ]; then
-    if  [ ! -d "/sbin/dmidecode" ]; then
-        echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
-        #删除脚本
-        if [ -f "$filePath/flycloud.sh" ]; then
-            rm -rf $filePath/flycloud.sh
-        fi
-        exit 1
-    fi
-    dmidecode="/sbin/dmidecode"
+# check os
+if [[ -f /etc/redhat-release ]]; then
+    release="centos"
+elif cat /etc/issue | grep -Eqi "debian"; then
+    release="debian"
+elif cat /etc/issue | grep -Eqi "ubuntu"; then
+    release="ubuntu"
+elif cat /etc/issue | grep -Eqi "centos|red hat|redhat"; then
+    release="centos"
+elif cat /proc/version | grep -Eqi "debian"; then
+    release="debian"
+elif cat /proc/version | grep -Eqi "ubuntu"; then
+    release="ubuntu"
+elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
+    release="centos"
+else
+    echo -e "${red}未检测到系统版本，请联系脚本作者！${plain}\n" && exit 1
 fi
-#判断/dev/mem
-if [ ! -d "/dev/mem" ]; then
+
+#判断是否已安装dmidecode
+if [[ x"${release}" == x"centos" ]]; then
+    yum -y install dmidecode
+elif [[ x"${release}" == x"ubuntu" ]]; then
+   apt-get -y install dmidecode
+elif [[ x"${release}" == x"debian" ]]; then
+   apt-get -y install dmidecode
+else
     echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
     #删除脚本
     if [ -f "$filePath/flycloud.sh" ]; then
@@ -52,6 +44,17 @@ if [ ! -d "/dev/mem" ]; then
     fi
     exit 1
 fi
+
+dmidecode_val=$(rpm -qa | grep "dmidecode")
+if [ $dmidecode_val == "" ]
+    echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
+    #删除脚本
+    if [ -f "$filePath/flycloud.sh" ]; then
+        rm -rf $filePath/flycloud.sh
+    fi
+    exit 1
+fi
+
 
 #检测是否需要重启flycloud
 check_restart_flycloud(){
@@ -156,10 +159,10 @@ start_flycloud(){
 
         #启动容器
         if  [ $num -eq 1 ];then
-        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v ${dmidecode}:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud --link redis:redis yuanter/flycloud
+        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v /sbin/dmidecode:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud --link redis:redis yuanter/flycloud
             echo -e "${yellow}使用--link模式启动成功${plain}"
         else if [ $num -eq 2 ];then
-        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v ${dmidecode}:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud yuanter/flycloud
+        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v /sbin/dmidecode:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud yuanter/flycloud
             echo -e "${yellow}以普通模式启动成功${plain}"
         	fi
         fi
