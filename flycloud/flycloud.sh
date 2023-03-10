@@ -32,7 +32,7 @@ fi
 
 
 dmidecode_val=$(rpm -qa | grep "dmidecode")
-if [ $dmidecode_val == "" ]
+if [ $dmidecode_val == "" ]; then
     #判断是否已安装dmidecode
     if [[ x"${release}" == x"centos" ]]; then
         yum -y install dmidecode
