@@ -10,6 +10,21 @@ path=$PWD
 #当前文件路径
 filePath=$PWD
 
+dmidecode="/usr/sbin/dmidecode"
+#判断/usr/sbin/dmidecode或者/sbin/dmidecode
+if [ ! -d "/usr/sbin/dmidecode" ]; then
+    if  [ ! -d "/sbin/dmidecode" ]; then
+        echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
+        exit 1
+    fi
+    dmidecode="/sbin/dmidecode"
+fi
+#判断/dev/mem
+if [ ! -d "/dev/mem" ]; then
+    echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
+    exit 1
+fi
+
 #检测是否需要重启flycloud
 check_restart_flycloud(){
     #判断flycloud容器是否已经启动
@@ -110,12 +125,13 @@ start_flycloud(){
             2) echo -e "${yellow}以普通模式启动脚本${plain}"; echo -e "\n";;
         esac
 
+
         #启动容器
         if  [ $num -eq 1 ];then
-        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170  -v ${filePath}/flycloud:/root/flycloud --link redis:redis yuanter/flycloud
+        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v ${dmidecode}:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud --link redis:redis yuanter/flycloud
             echo -e "${yellow}使用--link模式启动成功${plain}"
         else if [ $num -eq 2 ];then
-        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170  -v ${filePath}/flycloud:/root/flycloud yuanter/flycloud
+        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v ${dmidecode}:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud yuanter/flycloud
             echo -e "${yellow}以普通模式启动成功${plain}"
         	fi
         fi
@@ -190,11 +206,11 @@ check_yml(){
 
         # 卡密
         echo -e "${yellow}设置授权token: ${plain}"
-        read -r -p "请输入请输入您的授权码：" token
+        read -r -p "请输入您的授权码：" token
         grep -rnl 'token:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/token:.*$/token: $token/g" >/dev/null 2>&1
         # 授权地址
         echo -e "${yellow}设置授权网址: ${plain}"
-        read -r -p "请输入请输入您的授权网址：" url
+        read -r -p "请输入您的授权网址：" url
         grep -rnl 'url:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/url:.*$/url: $url/g" >/dev/null 2>&1
     fi
 
