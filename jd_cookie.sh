@@ -253,6 +253,8 @@ check_update() {
      check_statics
      #检测是否安装redis
      check_redis
+     #检测是否已经有配置文件
+     check_yml
      #启动jd_cookie
      cd ${filePath}/jd_cookie && check_restart_jd_cookie
      echo  -e "${yellow}当前没有需要升级的版本${plain}"
