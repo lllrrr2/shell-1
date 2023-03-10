@@ -15,6 +15,10 @@ dmidecode="/usr/sbin/dmidecode"
 if [ ! -f "/usr/sbin/dmidecode" ]; then
     if  [ ! -f "/sbin/dmidecode" ]; then
         echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
+        #删除脚本
+        if [ -f "$filePath/flycloud.sh" ]; then
+            rm -rf $filePath/flycloud.sh
+        fi
         exit 1
     fi
     dmidecode="/sbin/dmidecode"
@@ -22,6 +26,10 @@ fi
 #判断/dev/mem
 if [ ! -f "/dev/mem" ]; then
     echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
+    #删除脚本
+    if [ -f "$filePath/flycloud.sh" ]; then
+        rm -rf $filePath/flycloud.sh
+    fi
     exit 1
 fi
 
