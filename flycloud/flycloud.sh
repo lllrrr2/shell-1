@@ -29,30 +29,25 @@ else
     echo -e "${red}未检测到系统版本，请联系脚本作者！${plain}\n" && exit 1
 fi
 
-#判断是否已安装dmidecode
-if [[ x"${release}" == x"centos" ]]; then
-    yum -y install dmidecode
-elif [[ x"${release}" == x"ubuntu" ]]; then
-   apt-get -y install dmidecode
-elif [[ x"${release}" == x"debian" ]]; then
-   apt-get -y install dmidecode
-else
-    echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
-    #删除脚本
-    if [ -f "$filePath/flycloud.sh" ]; then
-        rm -rf $filePath/flycloud.sh
-    fi
-    exit 1
-fi
+
 
 dmidecode_val=$(rpm -qa | grep "dmidecode")
 if [ $dmidecode_val == "" ]
-    echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
-    #删除脚本
-    if [ -f "$filePath/flycloud.sh" ]; then
-        rm -rf $filePath/flycloud.sh
+    #判断是否已安装dmidecode
+    if [[ x"${release}" == x"centos" ]]; then
+        yum -y install dmidecode
+    elif [[ x"${release}" == x"ubuntu" ]]; then
+       apt-get -y install dmidecode
+    elif [[ x"${release}" == x"debian" ]]; then
+       apt-get -y install dmidecode
+    else
+        echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
+        #删除脚本
+        if [ -f "$filePath/flycloud.sh" ]; then
+            rm -rf $filePath/flycloud.sh
+        fi
+        exit 1
     fi
-    exit 1
 fi
 
 
