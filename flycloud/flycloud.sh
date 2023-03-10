@@ -35,11 +35,11 @@ dmidecode_val=$(rpm -qa | grep "dmidecode")
 if [ $dmidecode_val == "" ]; then
     #判断是否已安装dmidecode
     if [[ x"${release}" == x"centos" ]]; then
-        yum -y install dmidecode
+        yum -y install dmidecode  >/dev/null 2>&1
     elif [[ x"${release}" == x"ubuntu" ]]; then
-       apt-get -y install dmidecode
+       apt-get -y install dmidecode  >/dev/null 2>&1
     elif [[ x"${release}" == x"debian" ]]; then
-       apt-get -y install dmidecode
+       apt-get -y install dmidecode  >/dev/null 2>&1
     else
         echo -e "${yellow}当前系统不满足安装FlyCloud的条件,退出安装程序${plain}"
         #删除脚本
