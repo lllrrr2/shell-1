@@ -51,26 +51,27 @@ if [ $dmidecode_val == "" ]; then
 fi
 
 
-#检测是否需要重启flycloud
+
+#检测是否需要重启flycloud容器
 check_restart_flycloud(){
-    #判断flycloud容器是否已经启动
+    # 移除容器
     flycloud_id=$(docker ps | grep "flycloud" | awk '{print $1}')
     flycloud_id1=$(docker ps -a | grep "flycloud" | awk '{print $1}')
     if [ -n "$flycloud_id" ]; then
-      cd ${filePath}/flycloud && docker restart $flycloud_id
-    elif [ -n "$flycloud_id1" ]; then
-      cd ${filePath}/flycloud && docker restart $flycloud_id1
-    else
-      #未启动时，需要启动
-      start_flycloud
+      docker rm -f $flycloud_id
+    else if [ -n "$flycloud_id1" ]; then
+      docker rm -f $flycloud_id1
+      fi
     fi
+    #未启动时，需要启动
+    start_flycloud
 }
 
 #检测是否已下载静态文件statics
 check_statics(){
     if [ ! -d "${filePath}/flycloud/statics" ]; then
-      cd ${filePath}
       echo -e "[INFO] 检测到当前不存在静态文件夹statics，即将下载文件"
+      cd ${filePath}
       mkdir -p flycloud && cd flycloud || exit
       wget -O ${filePath}/flycloud/statics.tar.gz  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/statics.tar.gz
       if [ $? -ne 0 ]; then
@@ -133,7 +134,7 @@ start_flycloud(){
         #使用模式
         num=""
         echo -e "\n${yellow}请输入数字选择启动脚本模式：${plain}"
-        echo "   1) 使用--link模式启动(redis容器和flycloud容器在同一主机，符合条件推荐使用该模式)"
+        echo "   1) 使用--link模式启动(redis容器和flycloud容器在同一主机，服务器一般推荐使用该模式)"
         echo "   2) 以普通模式启动"
         echo "   0) 退出"
         echo -ne "\n你的选择："
@@ -151,15 +152,14 @@ start_flycloud(){
             2) echo -e "${yellow}以普通模式启动脚本${plain}"; echo -e "\n";;
         esac
 
-
         #启动容器
         if  [ $num -eq 1 ];then
-        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v /sbin/dmidecode:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud --link redis:redis yuanter/flycloud
+            docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v /sbin/dmidecode:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud --link redis:redis yuanter/flycloud
             echo -e "${yellow}使用--link模式启动成功${plain}"
         else if [ $num -eq 2 ];then
-        	docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v /sbin/dmidecode:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud yuanter/flycloud
+            docker run -d --privileged=true --restart=always  --name flycloud --ulimit core=0 -p 1170:1170 -v /sbin/dmidecode:/sbin/dmidecode -v /dev/mem:/dev/mem  -v ${filePath}/flycloud:/root/flycloud yuanter/flycloud
             echo -e "${yellow}以普通模式启动成功${plain}"
-        	fi
+            fi
         fi
 }
 
@@ -186,11 +186,9 @@ check_yml(){
             ;;
         esac
 
-
         #跳转至application.yml文件夹下
         cd $filePath/flycloud
         echo -e "application.yml文件所在路径为：$filePath/flycloud"
-
 
         # 替换脚本内容
         echo -e "\n   ${yellow}开始配置启动文件：${plain}"
@@ -229,8 +227,7 @@ check_yml(){
             echo -e "${yellow}未输入端口，使用默认端口6379${plain}"
         fi
         grep -rnl 'port: '  $filePath/flycloud/application.yml | xargs sed -i -r "s/port: [^port: 1170].*$/port: $port/g" >/dev/null 2>&1
-
-        # 卡密
+        # 配置卡密
         echo -e "${yellow}设置授权token: ${plain}"
         read -r -p "请输入您的授权码：" token
         grep -rnl 'token:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/token:.*$/token: $token/g" >/dev/null 2>&1
@@ -239,25 +236,13 @@ check_yml(){
         read -r -p "请输入您的授权网址：" url
         grep -rnl 'url:'  $filePath/flycloud/application.yml | xargs sed -i -r "s/url:.*$/url: $url/g" >/dev/null 2>&1
     fi
-
-    # 移除容器
-    id=$(docker ps | grep "flycloud" | awk '{print $1}')
-    id1=$(docker ps -a | grep "flycloud" | awk '{print $1}')
-    if [ -n "$id" ]; then
-      docker rm -f $id
-    else if [ -n "$id1" ]; then
-      docker rm -f $id1
-      fi
-    fi
-
-    #启动容器
-    start_flycloud
 }
 
 
 check_install() {
     #检测静态文件
     check_statics
+
     #检测app.jar
     if [ ! -f "${filePath}/flycloud/app.jar" ]; then
        echo -e "[INFO] 检测到当前不存在jar文件，即将下载文件"
@@ -272,6 +257,8 @@ check_install() {
     check_redis
     #检测application.yml文件
     check_yml
+    #启动容器
+    check_restart_flycloud
 }
 
 update_soft() {
@@ -282,7 +269,8 @@ update_soft() {
     if [ $? -ne 0 ]; then
       echo -e "[Error] 下载文件失败，请检查网络或重新执行本脚本"  && exit 2
     fi
-    #检测静态文件
+
+    #检测是否有静态文件
     check_statics
     #检测是否安装启动了redis
     check_redis
@@ -310,7 +298,7 @@ check_update() {
       #成功后下载version文件到本地
       wget -O ${filePath}/flycloud/version  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/version  >/dev/null 2>&1
     else
-     #检测静态文件
+     #检测是否已经下载静态文件
      check_statics
      #检测是否安装redis
      check_redis
@@ -322,6 +310,7 @@ check_update() {
     check_install
     #成功后下载version文件到本地
     wget -O ${filePath}/flycloud/version  --no-check-certificate https://ghproxy.com/https://raw.githubusercontent.com/yuanter/shell/main/flycloud/version  >/dev/null 2>&1
+
   fi
 }
 
@@ -333,12 +322,14 @@ version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; 
 
 main() {
   # 一键脚本
-  echo -e "\n   ${yellow}欢迎使用flycloud(飞云)一键脚本：${plain}"
+  echo -e "\n   ${yellow}欢迎使用flycloud一键脚本：${plain}"
+
   #检测是否存在文件 && 下载更新文件
   check_update
+
   #删除脚本
-  if [ -f "$filePath/start_flycloud.sh" ]; then
-  	rm -rf $filePath/start_flycloud.sh
+  if [ -f "$filePath/flycloud.sh" ]; then
+  	rm -rf $filePath/flycloud.sh
   	echo  -e "${yellow}删除当前脚本文件成功${plain}"
   fi
 
